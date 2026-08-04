@@ -25,15 +25,16 @@ function Practices() {
 const styles = {
   container: {
     minHeight: '80vh',
-    background: '#fcf6f0',
+    background: '#fdfbf7',
     padding: '4rem 2rem',
-    fontFamily: 'Georgia, serif',
+    fontFamily: 'Lato, sans-serif',
     textAlign: 'center'
   },
   title: {
     fontSize: '3rem',
-    color: '#2c1b13',
-    marginBottom: '2rem'
+    color: '#4a4036',
+    marginBottom: '2rem',
+    fontFamily: 'Playfair Display, serif'
   },
   grid: {
     display: 'grid',
@@ -43,18 +44,19 @@ const styles = {
     margin: '0 auto'
   },
   card: {
-    background: 'white',
+    background: '#ffffff',
     padding: '2rem',
-    borderRadius: '15px',
-    boxShadow: '0 4px 10px rgba(0,0,0,0.05)',
-    borderTop: '4px solid #c2a66b'
+    borderRadius: '20px',
+    boxShadow: '0 8px 30px rgba(216, 195, 165, 0.15)',
+    borderTop: '4px solid #8fa88a' /* Sage green */
   },
   cardTitle: {
-    color: '#2c1b13',
-    marginBottom: '0.5rem'
+    color: '#4a4036',
+    marginBottom: '0.5rem',
+    fontFamily: 'Playfair Display, serif'
   },
   cardDesc: {
-    color: '#555',
+    color: '#4a4036',
     lineHeight: '1.6'
   }
 };

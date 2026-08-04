@@ -1,20 +1,52 @@
+/* --- NATURE & FLORAL THEME --- */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
-  font-family: 'Georgia', serif;
-  background: #fcf6f0;
-  color: #2c1b13;
+  background: #fdfbf7; /* Soft Morning Light */
+  color: #4a4036; /* Warm Earth */
+  font-family: 'Lato', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Playfair Display', serif;
+  color: #4a4036;
+  letter-spacing: 0.5px;
 }
 
 a {
-  transition: opacity 0.3s;
+  color: #8fa88a; /* Sage Green */
+  text-decoration: none;
+  transition: color 0.3s ease, opacity 0.3s;
 }
+
 a:hover {
-  opacity: 0.7;
+  color: #e8c56d; /* Sunflower Gold */
+  opacity: 0.8;
 }
 
 button {
-  transition: transform 0.2s;
+  transition: transform 0.2s ease, background 0.3s ease;
+  font-family: 'Lato', sans-serif;
 }
+
 button:hover {
   transform: scale(1.02);
+}
+
+/* Scrollbar styling (optional) */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #fdfbf7;
+}
+::-webkit-scrollbar-thumb {
+  background: #d8c3a5;
+  border-radius: 10px;
 }

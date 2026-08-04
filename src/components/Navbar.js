@@ -10,6 +10,7 @@ function Navbar({ cartCount }) {
         <Link to="/practices" style={styles.link}>Practices</Link>
         <Link to="/founders" style={styles.link}>Founders</Link>
         <Link to="/shop" style={styles.link}>Shop</Link>
+        <Link to="/upload" style={styles.link}>📤 Upload</Link>
         <Link to="/cart" style={styles.link}>
           🛒 {cartCount > 0 && <span style={styles.badge}>{cartCount}</span>}
         </Link>
@@ -24,14 +25,16 @@ const styles = {
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: '1rem 2rem',
-    background: '#2c1b13',
-    color: '#fcf6f0',
-    fontFamily: 'Georgia, serif'
+    background: '#d8c3a5', /* Sandy Gold (Floral & Nature) */
+    color: '#ffffff',
+    fontFamily: 'Lato, sans-serif',
+    boxShadow: '0 4px 20px rgba(216, 195, 165, 0.3)'
   },
   logo: {
     fontSize: '1.4rem',
-    fontWeight: 'bold',
-    letterSpacing: '1px'
+    fontWeight: '700',
+    letterSpacing: '1px',
+    fontFamily: 'Playfair Display, serif'
   },
   links: {
     display: 'flex',
@@ -39,13 +42,14 @@ const styles = {
     alignItems: 'center'
   },
   link: {
-    color: '#e8d5b5',
+    color: '#ffffff',
     textDecoration: 'none',
-    fontSize: '1rem'
+    fontSize: '1rem',
+    fontWeight: '500'
   },
   badge: {
-    background: '#c2a66b',
-    color: '#2c1b13',
+    background: '#8fa88a', /* Sage Green */
+    color: '#ffffff',
     borderRadius: '50%',
     padding: '0.2rem 0.6rem',
     fontSize: '0.8rem',

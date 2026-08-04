@@ -54,10 +54,10 @@ function ThePath() {
 const styles = {
   container: {
     minHeight: '100vh',
-    background: '#fcf6f0',
+    background: '#fdfbf7', /* Soft morning light */
     padding: '3rem 1.5rem',
-    fontFamily: 'Georgia, serif',
-    color: '#2c1b13'
+    fontFamily: 'Lato, sans-serif',
+    color: '#4a4036' /* Warm earth */
   },
   header: {
     textAlign: 'center',
@@ -65,12 +65,13 @@ const styles = {
   },
   title: {
     fontSize: '3rem',
-    color: '#2c1b13',
-    marginBottom: '0.5rem'
+    color: '#4a4036',
+    marginBottom: '0.5rem',
+    fontFamily: 'Playfair Display, serif'
   },
   subtitle: {
     fontSize: '1.5rem',
-    color: '#c2a66b',
+    color: '#e8c56d', /* Sunflower gold */
     fontStyle: 'italic'
   },
   content: {
@@ -80,23 +81,26 @@ const styles = {
   section: {
     marginBottom: '3rem',
     padding: '2rem',
-    background: 'white',
-    borderRadius: '15px',
-    boxShadow: '0 4px 10px rgba(0,0,0,0.05)'
+    background: '#ffffff', /* Crisp white petal */
+    borderRadius: '20px',
+    boxShadow: '0 8px 30px rgba(216, 195, 165, 0.15)'
   },
   truthCard: {
     marginTop: '1rem',
     padding: '1rem 1.5rem',
-    background: '#fcf6f0',
-    borderRadius: '10px',
-    borderLeft: '4px solid #c2a66b'
+    background: '#fdfbf7',
+    borderRadius: '15px',
+    borderLeft: '4px solid #8fa88a' /* Sage green */
   },
   invitation: {
     textAlign: 'center',
     fontSize: '1.2rem',
     fontStyle: 'italic',
     padding: '2rem',
-    color: '#2c1b13'
+    color: '#4a4036',
+    background: '#ffffff',
+    borderRadius: '20px',
+    boxShadow: '0 8px 30px rgba(216, 195, 165, 0.15)'
   }
 };
 

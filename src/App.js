@@ -10,22 +10,17 @@ import Contact from './components/Contact';
 import ThePath from './components/ThePath';
 import Founders from './components/Founders';
 import Footer from './components/Footer';
-
-// ✨ NEW IMPORT FOR PERSISTENT CART
+import ImageUpload from './components/ImageUpload'; // ✨ NEW IMPORT
 import useLocalStorage from './hooks/useLocalStorage';
 
 function App() {
-  // 🔥 Instead of useState, we use our persistent hook
   const [cart, setCart] = useLocalStorage('spiritualCart', []);
 
   const addToCart = (item) => {
-    // Check if item already exists in cart
     const existingItem = cart.find((i) => i.id === item.id);
     if (existingItem) {
-      // If it exists, increase quantity (optional, if you want quantities)
       setCart(cart.map((i) => i.id === item.id ? { ...i, quantity: (i.quantity || 1) + 1 } : i));
     } else {
-      // If it's new, add it with quantity 1
       setCart([...cart, { ...item, quantity: 1 }]);
     }
   };
@@ -53,6 +48,8 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/the-path" element={<ThePath />} />
         <Route path="/founders" element={<Founders />} />
+        {/* ✨ NEW ROUTE: Upload Page */}
+        <Route path="/upload" element={<ImageUpload />} />
       </Routes>
       <Footer />
     </BrowserRouter>

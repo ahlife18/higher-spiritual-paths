@@ -30,27 +30,29 @@ function About() {
 const styles = {
   container: {
     minHeight: '80vh',
-    background: '#fcf6f0',
+    background: '#fdfbf7', /* Soft morning light */
     padding: '4rem 2rem',
-    fontFamily: 'Georgia, serif',
+    fontFamily: 'Lato, sans-serif',
     textAlign: 'center'
   },
   title: {
     fontSize: '3rem',
-    color: '#2c1b13',
-    marginBottom: '2rem'
+    color: '#4a4036', /* Warm earth */
+    marginBottom: '2rem',
+    fontFamily: 'Playfair Display, serif'
   },
   box: {
-    background: '#e8d5b5',
+    background: '#ffffff', /* Crisp white petal */
     padding: '2rem',
-    borderRadius: '15px',
+    borderRadius: '20px',
     maxWidth: '800px',
-    margin: '0 auto 3rem'
+    margin: '0 auto 3rem',
+    boxShadow: '0 8px 30px rgba(216, 195, 165, 0.15)'
   },
   preamble: {
     fontSize: '1.2rem',
     lineHeight: '1.8',
-    color: '#2c1b13'
+    color: '#4a4036'
   },
   truths: {
     display: 'grid',
@@ -60,10 +62,11 @@ const styles = {
     margin: '0 auto'
   },
   card: {
-    background: 'white',
+    background: '#ffffff',
     padding: '2rem',
-    borderRadius: '15px',
-    boxShadow: '0 4px 10px rgba(0,0,0,0.05)'
+    borderRadius: '20px',
+    boxShadow: '0 8px 30px rgba(216, 195, 165, 0.15)',
+    borderTop: '4px solid #e8c56d' /* Sunflower gold */
   }
 };
 
