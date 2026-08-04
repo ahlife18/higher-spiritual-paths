@@ -5,12 +5,25 @@
   box-sizing: border-box;
 }
 
+/* 🌐 FIX: Forces full width on mobile */
 body {
   margin: 0;
-  background: #fdfbf7; /* Soft Morning Light */
-  color: #4a4036; /* Warm Earth */
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden; /* Prevents horizontal scroll on mobile */
+  background: #fdfbf7;
+  color: #4a4036;
   font-family: 'Lato', sans-serif;
   -webkit-font-smoothing: antialiased;
+}
+
+/* 🌐 FIX: Ensures the React root also stretches 100% */
+#root {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -20,13 +33,13 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 a {
-  color: #8fa88a; /* Sage Green */
+  color: #8fa88a;
   text-decoration: none;
   transition: color 0.3s ease, opacity 0.3s;
 }
 
 a:hover {
-  color: #e8c56d; /* Sunflower Gold */
+  color: #e8c56d;
   opacity: 0.8;
 }
 
@@ -39,7 +52,7 @@ button:hover {
   transform: scale(1.02);
 }
 
-/* Scrollbar styling (optional) */
+/* Mobile-friendly scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
 }

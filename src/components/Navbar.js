@@ -6,22 +6,18 @@ function Navbar({ cartCount }) {
   const navigate = useNavigate();
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  // Check if we are on the home page
   const isHome = location.pathname === '/';
 
   const handleLogoClick = () => {
     if (isHome) {
-      // If already home, toggle the dropdown
       setDropdownOpen(!dropdownOpen);
     } else {
-      // If on another page, go home
       navigate('/');
     }
   };
 
   return (
     <nav style={styles.nav}>
-      {/* ✨ Clickable Logo */}
       <div 
         onClick={handleLogoClick} 
         style={styles.logo}
@@ -29,7 +25,6 @@ function Navbar({ cartCount }) {
         onMouseLeave={() => isHome && setDropdownOpen(false)}
       >
         🕯️ Higher Spiritual Paths
-        {/* Dropdown Menu - only appears when on Home and open */}
         {isHome && dropdownOpen && (
           <div style={styles.dropdown}>
             <Link to="/about" style={styles.dropdownItem}>About</Link>
@@ -42,7 +37,6 @@ function Navbar({ cartCount }) {
         )}
       </div>
 
-      {/* Standard Nav Links - These remain visible for quick access */}
       <div style={styles.links}>
         <Link to="/" style={styles.link}>Home</Link>
         <Link to="/about" style={styles.link}>About</Link>
@@ -64,12 +58,13 @@ const styles = {
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: '1rem 2rem',
-    background: '#d8c3a5', /* Sandy Gold */
+    background: '#d8c3a5',
     color: '#ffffff',
     fontFamily: 'Lato, sans-serif',
     boxShadow: '0 4px 20px rgba(216, 195, 165, 0.3)',
     position: 'relative',
-    zIndex: 1000
+    zIndex: 1000,
+    width: '100%' /* Ensures the navbar stretches full width */
   },
   logo: {
     fontSize: '1.4rem',
@@ -81,7 +76,6 @@ const styles = {
     padding: '0.5rem 0',
     transition: 'opacity 0.3s'
   },
-  /* 🌸 Beautiful Floating Petal Dropdown */
   dropdown: {
     position: 'absolute',
     top: '100%',
@@ -108,17 +102,20 @@ const styles = {
   },
   links: {
     display: 'flex',
-    gap: '2rem',
-    alignItems: 'center'
+    gap: '1.5rem',
+    alignItems: 'center',
+    flexWrap: 'wrap', /* ✅ FIX: Prevents overlapping on mobile */
+    justifyContent: 'flex-end'
   },
   link: {
     color: '#ffffff',
     textDecoration: 'none',
     fontSize: '1rem',
-    fontWeight: '500'
+    fontWeight: '500',
+    whiteSpace: 'nowrap'
   },
   badge: {
-    background: '#8fa88a', /* Sage Green */
+    background: '#8fa88a',
     color: '#ffffff',
     borderRadius: '50%',
     padding: '0.2rem 0.6rem',
@@ -128,7 +125,7 @@ const styles = {
   }
 };
 
-// Add a small CSS fade-in animation inline
+// Add animation keyframes directly to the head
 const styleTag = document.createElement('style');
 styleTag.innerHTML = `
   @keyframes fadeIn {
