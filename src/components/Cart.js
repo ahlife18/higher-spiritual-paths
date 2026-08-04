@@ -31,10 +31,10 @@ function Cart({ cart, removeFromCart, clearCart }) {
     try {
       // 🔥 PAYSTACK SETUP WITH YOUR EMAIL
       const handler = window.PaystackPop.setup({
-        key: 'pk_live_827aae9b1ef3daa5bec39d6a04107e7', // ✅ Your Live Public Key
+        key: 'pk_test_ac9fa0f6232af51eedd512720eb32f8dc008289a', // ✅ Your Live Public Key
         email: 'kolawoleemanuel@gmail.com',              // ✅ Your email (where money alerts go)
         amount: Math.round(total * 100),                 // ✅ Converts dollars to cents
-        currency: 'USD',                                 // ✅ Change to 'NGN' if you want Naira
+        currency: 'NGN',                                 // ✅ Change to 'NGN' if you want Naira
         callback: (response) => {
           setMessage(`✨ Thank you, ${form.name}. Payment successful! Reference: ${response.reference}`);
           clearCart();
