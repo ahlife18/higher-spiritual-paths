@@ -6,9 +6,10 @@ function Cart({ cart, removeFromCart, clearCart }) {
   const [message, setMessage] = useState('');
   const [isProcessing, setIsProcessing] = useState(false);
 
+  // ✅ DYNAMIC TOTAL: Sums up the price of every item in the cart
   const total = cart.reduce((sum, item) => sum + (item.price * (item.quantity || 1)), 0);
 
-  // 💵 Paystack Payment Handler (USD)
+  // 💳 PAYSTACK HANDLER (Charges the EXACT cart total in USD)
   const handlePaystackPayment = () => {
     if (typeof window.PaystackPop === 'undefined') {
       alert('Payment system is loading. Please try again in a moment.');
@@ -19,13 +20,13 @@ function Cart({ cart, removeFromCart, clearCart }) {
 
     const paystack = new window.PaystackPop();
     paystack.newTransaction({
-      key: 'pk_live_827aae9b1ef3daa5bec39d6a04107e7131631541', // 🔥 Replace with your Paystack Public Key
+      key: 'pk_test_YOUR_PUBLIC_KEY_HERE', // 🔥 Replace with your Paystack Public Key
       email: form.email,
-      amount: Math.round(total * 100), // Paystack expects cents (dollars × 100)
-      currency: 'USD', // ✅ NOW IN USD
+      amount: Math.round(total * 100), // ✅ Paystack expects cents (dollars × 100)
+      currency: 'USD', 
       callback: (response) => {
         setMessage(`✨ Thank you, ${form.name}. Payment successful! Reference: ${response.reference}`);
-        clearCart();
+        clearCart(); // ✅ Empty the cart after successful purchase
         setCheckout(false);
         setIsProcessing(false);
       },
@@ -64,6 +65,8 @@ function Cart({ cart, removeFromCart, clearCart }) {
           </div>
         ))}
       </div>
+      
+      {/* ✅ TOTAL DISPLAY */}
       <h3 style={styles.total}>Total: ${total.toFixed(2)}</h3>
       
       {!checkout ? (
@@ -97,7 +100,7 @@ function Cart({ cart, removeFromCart, clearCart }) {
             disabled={isProcessing}
             style={isProcessing ? { ...styles.submit, opacity: 0.6 } : styles.submit}
           >
-            {isProcessing ? 'Processing...' : `Pay $${total.toFixed(2)}`}
+            {isProcessing ? 'Processing...' : `💳 Pay $${total.toFixed(2)}`}
           </button>
         </form>
       )}
