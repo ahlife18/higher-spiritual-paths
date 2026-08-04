@@ -4,14 +4,45 @@ function Cart({ cart, removeFromCart, clearCart }) {
   const [checkout, setCheckout] = useState(false);
   const [form, setForm] = useState({ name: '', email: '', address: '' });
   const [message, setMessage] = useState('');
+  const [isProcessing, setIsProcessing] = useState(false);
 
   const total = cart.reduce((sum, item) => sum + (item.price * (item.quantity || 1)), 0);
 
-  const handleCheckout = (e) => {
+  // 💵 Paystack Payment Handler (USD)
+  const handlePaystackPayment = () => {
+    if (typeof window.PaystackPop === 'undefined') {
+      alert('Payment system is loading. Please try again in a moment.');
+      return;
+    }
+
+    setIsProcessing(true);
+
+    const paystack = new window.PaystackPop();
+    paystack.newTransaction({
+      key: 'pk_live_827aae9b1ef3daa5bec39d6a04107e7131631541', // 🔥 Replace with your Paystack Public Key
+      email: form.email,
+      amount: Math.round(total * 100), // Paystack expects cents (dollars × 100)
+      currency: 'USD', // ✅ NOW IN USD
+      callback: (response) => {
+        setMessage(`✨ Thank you, ${form.name}. Payment successful! Reference: ${response.reference}`);
+        clearCart();
+        setCheckout(false);
+        setIsProcessing(false);
+      },
+      onClose: () => {
+        setIsProcessing(false);
+        alert('Payment window closed.');
+      }
+    });
+  };
+
+  const handleSubmit = (e) => {
     e.preventDefault();
-    setMessage(`✨ Thank you, ${form.name}. Your sacred tools are on their way. A confirmation has been sent to ${form.email}.`);
-    setCheckout(false);
-    clearCart(); // Clear cart after successful purchase
+    if (!form.name || !form.email || !form.address) {
+      setMessage('⚠️ Please fill in all fields.');
+      return;
+    }
+    handlePaystackPayment();
   };
 
   if (cart.length === 0) {
@@ -38,12 +69,36 @@ function Cart({ cart, removeFromCart, clearCart }) {
       {!checkout ? (
         <button onClick={() => setCheckout(true)} style={styles.btn}>Proceed to Checkout</button>
       ) : (
-        <form onSubmit={handleCheckout} style={styles.form}>
+        <form onSubmit={handleSubmit} style={styles.form}>
           <h4>Shipping Details</h4>
-          <input placeholder="Full Name" value={form.name} onChange={e => setForm({...form, name: e.target.value})} style={styles.input} required />
-          <input placeholder="Email" value={form.email} onChange={e => setForm({...form, email: e.target.value})} style={styles.input} required />
-          <input placeholder="Address" value={form.address} onChange={e => setForm({...form, address: e.target.value})} style={styles.input} required />
-          <button type="submit" style={styles.submit}>Complete Purchase</button>
+          <input 
+            placeholder="Full Name" 
+            value={form.name} 
+            onChange={e => setForm({...form, name: e.target.value})} 
+            style={styles.input} 
+            required 
+          />
+          <input 
+            placeholder="Email" 
+            value={form.email} 
+            onChange={e => setForm({...form, email: e.target.value})} 
+            style={styles.input} 
+            required 
+          />
+          <input 
+            placeholder="Address" 
+            value={form.address} 
+            onChange={e => setForm({...form, address: e.target.value})} 
+            style={styles.input} 
+            required 
+          />
+          <button 
+            type="submit" 
+            disabled={isProcessing}
+            style={isProcessing ? { ...styles.submit, opacity: 0.6 } : styles.submit}
+          >
+            {isProcessing ? 'Processing...' : `Pay $${total.toFixed(2)}`}
+          </button>
         </form>
       )}
       {message && <p style={styles.message}>{message}</p>}
@@ -52,19 +107,94 @@ function Cart({ cart, removeFromCart, clearCart }) {
 }
 
 const styles = {
-  container: { minHeight: '80vh', background: '#fcf6f0', padding: '4rem 2rem', fontFamily: 'Georgia, serif', textAlign: 'center', maxWidth: '600px', margin: '0 auto' },
-  empty: { textAlign: 'center', padding: '4rem', fontSize: '1.5rem', color: '#888' },
-  title: { fontSize: '2.5rem', color: '#2c1b13' },
-  list: { display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '2rem' },
-  item: { display: 'flex', justifyContent: 'space-between', padding: '0.8rem', background: 'white', borderRadius: '10px' },
-  qty: { color: '#888', fontSize: '0.9rem' },
-  remove: { background: 'transparent', border: 'none', color: '#e74c3c', cursor: 'pointer', fontSize: '1.2rem' },
-  total: { fontSize: '1.8rem', color: '#2c1b13', marginBottom: '1.5rem' },
-  btn: { padding: '0.8rem 2rem', background: '#3b2f4f', color: 'white', border: 'none', borderRadius: '30px', fontSize: '1.1rem', cursor: 'pointer' },
-  form: { display: 'flex', flexDirection: 'column', gap: '1rem', marginTop: '2rem' },
-  input: { padding: '0.8rem', borderRadius: '10px', border: '1px solid #ddd', fontSize: '1rem' },
-  submit: { padding: '0.8rem', background: '#c2a66b', color: '#2c1b13', border: 'none', borderRadius: '10px', fontSize: '1.1rem', fontWeight: 'bold', cursor: 'pointer' },
-  message: { marginTop: '2rem', fontSize: '1.2rem', color: '#27ae60' }
+  container: { 
+    minHeight: '80vh', 
+    background: '#fdfbf7', 
+    padding: '4rem 2rem', 
+    fontFamily: 'Lato, sans-serif', 
+    textAlign: 'center', 
+    maxWidth: '600px', 
+    margin: '0 auto' 
+  },
+  empty: { 
+    textAlign: 'center', 
+    padding: '4rem', 
+    fontSize: '1.5rem', 
+    color: '#888' 
+  },
+  title: { 
+    fontSize: '2.5rem', 
+    color: '#4a4036', 
+    fontFamily: 'Playfair Display, serif' 
+  },
+  list: { 
+    display: 'flex', 
+    flexDirection: 'column', 
+    gap: '1rem', 
+    marginBottom: '2rem' 
+  },
+  item: { 
+    display: 'flex', 
+    justifyContent: 'space-between', 
+    padding: '0.8rem', 
+    background: '#ffffff', 
+    borderRadius: '10px', 
+    boxShadow: '0 2px 10px rgba(216, 195, 165, 0.1)' 
+  },
+  qty: { 
+    color: '#888', 
+    fontSize: '0.9rem' 
+  },
+  remove: { 
+    background: 'transparent', 
+    border: 'none', 
+    color: '#e74c3c', 
+    cursor: 'pointer', 
+    fontSize: '1.2rem' 
+  },
+  total: { 
+    fontSize: '1.8rem', 
+    color: '#4a4036', 
+    marginBottom: '1.5rem', 
+    fontFamily: 'Playfair Display, serif' 
+  },
+  btn: { 
+    padding: '0.8rem 2rem', 
+    background: '#8fa88a', 
+    color: '#ffffff', 
+    border: 'none', 
+    borderRadius: '30px', 
+    fontSize: '1.1rem', 
+    cursor: 'pointer', 
+    fontFamily: 'Lato, sans-serif' 
+  },
+  form: { 
+    display: 'flex', 
+    flexDirection: 'column', 
+    gap: '1rem', 
+    marginTop: '2rem' 
+  },
+  input: { 
+    padding: '0.8rem', 
+    borderRadius: '10px', 
+    border: '1px solid #ddd', 
+    fontSize: '1rem' 
+  },
+  submit: { 
+    padding: '0.8rem', 
+    background: '#e8c56d', 
+    color: '#4a4036', 
+    border: 'none', 
+    borderRadius: '10px', 
+    fontSize: '1.1rem', 
+    fontWeight: 'bold', 
+    cursor: 'pointer' 
+  },
+  message: { 
+    marginTop: '2rem', 
+    fontSize: '1.2rem', 
+    color: '#27ae60' 
+  }
 };
 
 export default Cart;
