@@ -29,12 +29,12 @@ function Cart({ cart, removeFromCart, clearCart }) {
     setIsProcessing(true);
 
     try {
-      // ✅ FIX: Use .setup() instead of new PaystackPop()
-      window.PaystackPop.setup({
-        key: 'pk_live_827aae9b1ef3daa5bec39d6a04107e7131631541', // 🔥 REPLACE THIS WITH YOUR REAL KEY
-        email: form.email,
-        amount: Math.round(total * 100), // USD cents
-        currency: 'USD',
+      // 🔥 PAYSTACK SETUP WITH YOUR EMAIL
+      const handler = window.PaystackPop.setup({
+        key: 'pk_live_827aae9b1ef3daa5bec39d6a04107e7', // ✅ Your Live Public Key
+        email: 'kolawoleemanuel@gmail.com',              // ✅ Your email (where money alerts go)
+        amount: Math.round(total * 100),                 // ✅ Converts dollars to cents
+        currency: 'USD',                                 // ✅ Change to 'NGN' if you want Naira
         callback: (response) => {
           setMessage(`✨ Thank you, ${form.name}. Payment successful! Reference: ${response.reference}`);
           clearCart();
@@ -46,6 +46,10 @@ function Cart({ cart, removeFromCart, clearCart }) {
           alert('Payment window closed.');
         }
       });
+      
+      // ✅ Explicitly open the popup (just in case)
+      handler.openIframe();
+      
     } catch (error) {
       console.error('Paystack error:', error);
       alert('❌ Error launching Paystack: ' + error.message);
