@@ -22,7 +22,7 @@ function Home() {
   return (
     <div style={styles.container}>
       
-      {/* --- HERO SECTION --- */}
+      {/* --- HERO SECTION (LIGHTER PURPLE) --- */}
       <motion.div 
         initial="hidden" 
         animate="visible" 
@@ -43,25 +43,26 @@ function Home() {
         whileInView="visible" 
         viewport={{ once: true, amount: 0.2 }}
         variants={fadeUp}
-        style={styles.sectionPurple}
+        style={styles.sectionLavender}
       >
         <div style={styles.splitContainer}>
           <motion.div variants={fadeLeft} style={styles.splitText}>
             <div style={styles.beliefsHeader}>
               <span style={styles.starIcon}>✦</span>
-              <h2 style={styles.headingWhite}>OUR CORE<br />BELIEFS</h2>
+              <h2 style={styles.headingDarkPurple}>OUR CORE<br />BELIEFS</h2>
             </div>
-            <p style={styles.bodyWhite}>
+            <p style={styles.bodyDarkPurple}>
               At Higher Spiritual Paths, we embrace the journey of self-discovery and growth. Our teachings center on mindfulness, compassion, and the pursuit of inner peace.
             </p>
           </motion.div>
           <motion.div variants={fadeRight} style={styles.splitImage}>
-            <img src="/images/nature.png" alt="Spiritual Landscape" style={styles.landscapeImg} />
+            {/* ✅ MATCHED: nature.png */}
+            <img src="/nature.png" alt="Spiritual Landscape" style={styles.landscapeImg} />
           </motion.div>
         </div>
       </motion.div>
 
-      {/* --- HOLISTIC PRACTICES (Using circles.png) --- */}
+      {/* --- HOLISTIC PRACTICES (Using works.png) --- */}
       <motion.div 
         initial="hidden" 
         whileInView="visible" 
@@ -72,7 +73,8 @@ function Home() {
         <h2 style={styles.headingDark}>HOLISTIC<br />PRACTICES</h2>
         <div style={styles.practicesGrid}>
           <div style={styles.practiceCard}>
-            <img src="/images/circles.png" alt="Holistic Practices" style={styles.practiceImg} />
+            {/* ✅ MATCHED: works.png */}
+            <img src="/works.png" alt="Holistic Practices" style={styles.practiceImg} />
             <h3>Meditation & Circles</h3>
           </div>
         </div>
@@ -81,28 +83,29 @@ function Home() {
         </p>
       </motion.div>
 
-      {/* --- MEET OUR GUIDES (Using meditation.png) --- */}
+      {/* --- MEET OUR GUIDES (Using meditaion.png) --- */}
       <motion.div 
         initial="hidden" 
         whileInView="visible" 
         viewport={{ once: true, amount: 0.2 }}
         variants={fadeUp}
-        style={styles.sectionPurple}
+        style={styles.sectionLavender}
       >
-        <h2 style={styles.headingWhite}>MEET OUR<br />GUIDES</h2>
+        <h2 style={styles.headingDarkPurple}>MEET OUR<br />GUIDES</h2>
         <div style={styles.guidesGrid}>
           <div style={styles.guideCard}>
-            <img src="/images/meditation.png" alt="Guide" style={styles.guideImg} />
+            {/* ✅ MATCHED: meditaion.png */}
+            <img src="/meditaion.png" alt="Guide" style={styles.guideImg} />
             <h3 style={styles.guideName}>Kolawole Emmanuel</h3>
             <p style={styles.guideRole}>Founder</p>
           </div>
           <div style={styles.guideCard}>
-            <img src="/images/meditation.png" alt="Guide" style={styles.guideImg} />
+            <img src="/meditaion.png" alt="Guide" style={styles.guideImg} />
             <h3 style={styles.guideName}>Karen Johnson</h3>
             <p style={styles.guideRole}>Co-Founder</p>
           </div>
           <div style={styles.guideCard}>
-            <img src="/images/meditation.png" alt="Guide" style={styles.guideImg} />
+            <img src="/meditaion.png" alt="Guide" style={styles.guideImg} />
             <h3 style={styles.guideName}>Bennie Hollis</h3>
             <p style={styles.guideRole}>Co-Founder</p>
           </div>
@@ -120,32 +123,16 @@ function Home() {
         <h2 style={styles.headingDark}>COMMUNITY<br />VOICES</h2>
         <div style={styles.communityGrid}>
           <div style={styles.communityCard}>
-            <img src="/images/group circles.png" alt="Community" style={styles.communityImg} />
+            {/* ✅ MATCHED: group circles.png */}
+            <img src="/group circles.png" alt="Community" style={styles.communityImg} />
             <p>"This path has completely changed how I view the world."</p>
             <span style={styles.name}>— Sarah M.</span>
           </div>
           <div style={styles.communityCard}>
-            <img src="/images/group circles.png" alt="Community" style={styles.communityImg} />
+            <img src="/group circles.png" alt="Community" style={styles.communityImg} />
             <p>"The peace I’ve found here is something I’ve been searching for."</p>
             <span style={styles.name}>— David T.</span>
           </div>
-        </div>
-      </motion.div>
-
-      {/* --- UPCOMING WORKSHOPS (Using works.png) --- */}
-      <motion.div 
-        initial="hidden" 
-        whileInView="visible" 
-        viewport={{ once: true, amount: 0.2 }}
-        variants={fadeUp}
-        style={styles.sectionPurple}
-      >
-        <h2 style={styles.headingWhite}>UPCOMING<br />WORKSHOPS</h2>
-        <div style={styles.workshopContainer}>
-          <img src="/images/works.png" alt="Workshop" style={styles.workshopImg} />
-          <p style={styles.bodyWhite}>
-            Join us for transformative workshops, deep exploration of spiritual practices, and community gatherings.
-          </p>
         </div>
       </motion.div>
 
@@ -159,7 +146,8 @@ function Home() {
       >
         <h2 style={styles.headingDark}>SPIRITUAL<br />RESOURCES</h2>
         <div style={styles.resourcesContainer}>
-          <img src="/images/routine.png" alt="Resources" style={styles.resourceImg} />
+          {/* ✅ MATCHED: routine.png */}
+          <img src="/routine.png" alt="Resources" style={styles.resourceImg} />
         </div>
         <p style={styles.practicesDesc}>
           Discover essential tools to enhance your spiritual journey—crystals, books, malas, and more.
@@ -172,10 +160,11 @@ function Home() {
         whileInView="visible" 
         viewport={{ once: true, amount: 0.2 }}
         variants={fadeUp}
-        style={styles.sectionPurple}
+        style={styles.sectionLavender}
       >
-        <h2 style={styles.headingWhite}>CONNECT WITH<br />US</h2>
-        <img src="/images/practice.png" alt="Community" style={styles.footerImg} />
+        <h2 style={styles.headingDarkPurple}>CONNECT WITH<br />US</h2>
+        {/* ✅ MATCHED: practice.png */}
+        <img src="/practice.png" alt="Community" style={styles.footerImg} />
         <div style={styles.contactInfo}>
           <div>📞 Bennie Hollis: +1 (352) 544-9302</div>
           <div>📞 Karen Johnson: +1 (713) 384-0334</div>
@@ -195,9 +184,10 @@ const styles = {
     width: '100%',
     overflowX: 'hidden'
   },
+  // --- HERO (LIGHTER PURPLE) ---
   hero: {
-    background: '#2E1A47',
-    color: 'white',
+    background: '#F5EEF8', /* Light lavender from Canva */
+    color: '#5B2A8C', /* Darker purple text */
     padding: '100px 20px',
     textAlign: 'center'
   },
@@ -209,22 +199,25 @@ const styles = {
     fontSize: '14px',
     letterSpacing: '2px',
     fontWeight: 'bold',
+    color: '#5B2A8C',
     marginBottom: '10px'
   },
   heroTitle: {
     fontSize: '48px',
     fontWeight: 'bold',
     marginBottom: '20px',
-    lineHeight: '1.2'
+    lineHeight: '1.2',
+    color: '#5B2A8C'
   },
   heroDesc: {
     fontSize: '18px',
     marginBottom: '30px',
+    color: '#5B2A8C',
     opacity: 0.9
   },
   exploreBtn: {
-    background: 'white',
-    color: '#2E1A47',
+    background: '#5B2A8C', /* Darker purple button */
+    color: 'white',
     padding: '15px 40px',
     borderRadius: '30px',
     border: 'none',
@@ -232,9 +225,10 @@ const styles = {
     fontSize: '16px',
     cursor: 'pointer'
   },
-  sectionPurple: {
-    background: '#2E1A47',
-    color: 'white',
+  // --- SECTIONS ---
+  sectionLavender: {
+    background: '#F5EEF8',
+    color: '#5B2A8C',
     padding: '80px 20px'
   },
   sectionWhite: {
@@ -242,6 +236,7 @@ const styles = {
     color: '#1A1A1A',
     padding: '80px 20px'
   },
+  // --- BELIEFS ---
   splitContainer: {
     display: 'flex',
     flexWrap: 'wrap',
@@ -261,7 +256,7 @@ const styles = {
   landscapeImg: {
     width: '100%',
     borderRadius: '12px',
-    boxShadow: '0 10px 30px rgba(0,0,0,0.3)'
+    boxShadow: '0 10px 30px rgba(0,0,0,0.1)'
   },
   beliefsHeader: {
     display: 'flex',
@@ -271,24 +266,27 @@ const styles = {
   },
   starIcon: {
     fontSize: '32px',
-    color: '#D4AF37'
+    color: '#5B2A8C'
   },
-  headingWhite: {
+  headingDarkPurple: {
     fontSize: '36px',
     fontWeight: 'bold',
-    margin: 0
+    margin: 0,
+    color: '#5B2A8C'
   },
   headingDark: {
     fontSize: '36px',
     fontWeight: 'bold',
     margin: '0 0 30px 0',
-    color: '#2E1A47'
+    color: '#5B2A8C'
   },
-  bodyWhite: {
+  bodyDarkPurple: {
     fontSize: '18px',
     lineHeight: '1.8',
+    color: '#5B2A8C',
     opacity: 0.9
   },
+  // --- PRACTICES ---
   practicesGrid: {
     display: 'grid',
     gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
@@ -309,8 +307,10 @@ const styles = {
     maxWidth: '600px',
     margin: '0 auto',
     fontSize: '16px',
-    lineHeight: '1.6'
+    lineHeight: '1.6',
+    color: '#5B2A8C'
   },
+  // --- GUIDES ---
   guidesGrid: {
     display: 'grid',
     gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
@@ -320,7 +320,7 @@ const styles = {
   },
   guideCard: {
     textAlign: 'center',
-    background: 'rgba(255,255,255,0.1)',
+    background: 'rgba(255,255,255,0.5)',
     padding: '20px',
     borderRadius: '15px'
   },
@@ -334,12 +334,15 @@ const styles = {
   guideName: {
     fontSize: '20px',
     fontWeight: 'bold',
-    margin: '5px 0'
+    margin: '5px 0',
+    color: '#5B2A8C'
   },
   guideRole: {
     fontSize: '14px',
-    opacity: 0.7
+    opacity: 0.7,
+    color: '#5B2A8C'
   },
+  // --- COMMUNITY ---
   communityGrid: {
     display: 'grid',
     gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
@@ -348,7 +351,7 @@ const styles = {
     margin: '0 auto'
   },
   communityCard: {
-    background: '#F7F4FA',
+    background: '#F5EEF8',
     padding: '30px',
     borderRadius: '12px',
     textAlign: 'center'
@@ -363,19 +366,9 @@ const styles = {
     display: 'block',
     marginTop: '15px',
     fontWeight: 'bold',
-    color: '#2E1A47'
+    color: '#5B2A8C'
   },
-  workshopContainer: {
-    maxWidth: '600px',
-    margin: '0 auto',
-    textAlign: 'center'
-  },
-  workshopImg: {
-    width: '100%',
-    maxWidth: '400px',
-    borderRadius: '12px',
-    marginBottom: '20px'
-  },
+  // --- RESOURCES ---
   resourcesContainer: {
     textAlign: 'center',
     marginBottom: '20px'
@@ -384,6 +377,7 @@ const styles = {
     maxWidth: '300px',
     borderRadius: '12px'
   },
+  // --- CONNECT ---
   footerImg: {
     width: '100%',
     maxWidth: '600px',
@@ -397,17 +391,17 @@ const styles = {
     gap: '5px',
     marginTop: '20px',
     fontSize: '16px',
-    color: '#D4AF37'
+    color: '#5B2A8C'
   },
   footerDivider: {
     height: '1px',
-    background: 'rgba(255,255,255,0.2)',
+    background: 'rgba(91, 42, 140, 0.2)',
     margin: '30px 0'
   },
   footer: {
     fontSize: '24px',
     fontWeight: 'bold',
-    color: '#D4AF37'
+    color: '#5B2A8C'
   }
 };
 
