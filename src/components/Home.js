@@ -30,7 +30,7 @@ function Home() {
         style={styles.hero}
       >
         <div style={styles.heroContent}>
-          <p style={styles.heroSubtitle}>HIGHER SPIRITUAL PATHS</p>
+          <p style={styles.heroSubtitle}>HIGHER SPIRITUAL PATHs</p>
           <h1 style={styles.heroTitle}>EMBRACE YOUR<br />SPIRITUAL JOURNEY</h1>
           <p style={styles.heroDesc}>Discover transformative practices and insights to elevate your spiritual experience.</p>
           <button onClick={() => navigate('/the-path')} style={styles.exploreBtn}>EXPLORE NOW</button>
@@ -73,8 +73,8 @@ function Home() {
         <h2 style={styles.headingDark}>HOLISTIC<br />PRACTICES</h2>
         <div style={styles.practicesGrid}>
           <div style={styles.practiceCard}>
-            {/* ✅ MATCHED: works.png */}
-            <img src="/works.png" alt="Holistic Practices" style={styles.practiceImg} />
+            {/* ✅ MATCHED: meditaion.png */}
+            <img src="/meditaion.png" alt="Holistic Practices" style={styles.practiceImg} />
             <h3>Meditation & Circles</h3>
           </div>
         </div>
@@ -94,18 +94,18 @@ function Home() {
         <h2 style={styles.headingDarkPurple}>MEET OUR<br />GUIDES</h2>
         <div style={styles.guidesGrid}>
           <div style={styles.guideCard}>
-            {/* ✅ MATCHED: meditaion.png */}
-            <img src="/meditaion.png" alt="Guide" style={styles.guideImg} />
+            {/* ✅ MATCHED: circles.png */}
+            <img src="/circles.png" alt="Guide" style={styles.guideImg} />
             <h3 style={styles.guideName}>Kolawole Emmanuel</h3>
             <p style={styles.guideRole}>Founder</p>
           </div>
           <div style={styles.guideCard}>
-            <img src="/meditaion.png" alt="Guide" style={styles.guideImg} />
+            <img src="/circles.png" alt="Guide" style={styles.guideImg} />
             <h3 style={styles.guideName}>Karen Johnson</h3>
             <p style={styles.guideRole}>Co-Founder</p>
           </div>
           <div style={styles.guideCard}>
-            <img src="/meditaion.png" alt="Guide" style={styles.guideImg} />
+            <img src="/circles.png" alt="Guide" style={styles.guideImg} />
             <h3 style={styles.guideName}>Bennie Hollis</h3>
             <p style={styles.guideRole}>Co-Founder</p>
           </div>
@@ -146,8 +146,8 @@ function Home() {
       >
         <h2 style={styles.headingDark}>SPIRITUAL<br />RESOURCES</h2>
         <div style={styles.resourcesContainer}>
-          {/* ✅ MATCHED: routine.png */}
-          <img src="/routine.png" alt="Resources" style={styles.resourceImg} />
+          {/* ✅ MATCHED: works.png */}
+          <img src="/works.png" alt="Resources" style={styles.resourceImg} />
         </div>
         <p style={styles.practicesDesc}>
           Discover essential tools to enhance your spiritual journey—crystals, books, malas, and more.
