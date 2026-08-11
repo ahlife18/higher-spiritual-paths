@@ -24,7 +24,7 @@ function Navbar({ cartCount }) {
         onMouseEnter={() => isHome && setDropdownOpen(true)}
         onMouseLeave={() => isHome && setDropdownOpen(false)}
       >
-        🕯️ Higher Spiritual Paths
+        <span style={styles.logoIcon}>✦</span> Higher Spiritual Paths
         {isHome && dropdownOpen && (
           <div style={styles.dropdown}>
             <Link to="/about" style={styles.dropdownItem}>About</Link>
@@ -58,23 +58,27 @@ const styles = {
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: '1rem 2rem',
-    background: '#d8c3a5',
+    background: '#2E1A47', // Deep Purple
     color: '#ffffff',
-    fontFamily: 'Lato, sans-serif',
-    boxShadow: '0 4px 20px rgba(216, 195, 165, 0.3)',
+    fontFamily: 'Montserrat, sans-serif',
+    boxShadow: '0 4px 20px rgba(46, 26, 71, 0.3)',
     position: 'relative',
-    zIndex: 1000,
-    width: '100%' /* Ensures the navbar stretches full width */
+    zIndex: 1000
   },
   logo: {
     fontSize: '1.4rem',
     fontWeight: '700',
     letterSpacing: '1px',
-    fontFamily: 'Playfair Display, serif',
     cursor: 'pointer',
     position: 'relative',
     padding: '0.5rem 0',
-    transition: 'opacity 0.3s'
+    display: 'flex',
+    alignItems: 'center',
+    gap: '10px'
+  },
+  logoIcon: {
+    color: '#D4AF37',
+    fontSize: '1.8rem'
   },
   dropdown: {
     position: 'absolute',
@@ -82,21 +86,21 @@ const styles = {
     left: '0',
     background: '#ffffff',
     padding: '1rem',
-    borderRadius: '20px',
-    boxShadow: '0 10px 40px rgba(216, 195, 165, 0.3)',
+    borderRadius: '12px',
+    boxShadow: '0 10px 40px rgba(0,0,0,0.15)',
     minWidth: '200px',
     display: 'flex',
     flexDirection: 'column',
     gap: '0.5rem',
     marginTop: '0.5rem',
-    border: '1px solid rgba(216, 195, 165, 0.3)',
+    border: '1px solid rgba(46, 26, 71, 0.1)',
     animation: 'fadeIn 0.3s ease'
   },
   dropdownItem: {
-    color: '#4a4036',
+    color: '#1a1a1a',
     textDecoration: 'none',
     padding: '0.5rem 1rem',
-    borderRadius: '10px',
+    borderRadius: '8px',
     transition: 'background 0.2s',
     fontWeight: '500'
   },
@@ -104,19 +108,18 @@ const styles = {
     display: 'flex',
     gap: '1.5rem',
     alignItems: 'center',
-    flexWrap: 'wrap', /* ✅ FIX: Prevents overlapping on mobile */
+    flexWrap: 'wrap',
     justifyContent: 'flex-end'
   },
   link: {
     color: '#ffffff',
     textDecoration: 'none',
-    fontSize: '1rem',
-    fontWeight: '500',
-    whiteSpace: 'nowrap'
+    fontSize: '0.95rem',
+    fontWeight: '500'
   },
   badge: {
-    background: '#8fa88a',
-    color: '#ffffff',
+    background: '#D4AF37',
+    color: '#2E1A47',
     borderRadius: '50%',
     padding: '0.2rem 0.6rem',
     fontSize: '0.8rem',
@@ -124,15 +127,5 @@ const styles = {
     marginLeft: '0.3rem'
   }
 };
-
-// Add animation keyframes directly to the head
-const styleTag = document.createElement('style');
-styleTag.innerHTML = `
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-`;
-document.head.appendChild(styleTag);
 
 export default Navbar;
