@@ -167,8 +167,8 @@ function Home() {
         <img src="/practice.png" alt="Community" style={styles.footerImg} />
         <div style={styles.contactInfo}>
           <div>📞 Bennie Hollis: +1 (352) 544-9302</div>
-          <div>📞 Karen Johnson: +1 (713) 384-0344</div>
-          <div>📞 Kolawole Emmanuel: +234 (081) 084-91093</div>
+          <div>📞 Karen Johnson: +1 (716) 364-0344</div>
+          <div>📞 Kolawole Emmanuel: +234 (810) 849-1093</div>
         </div>
         <div style={styles.footerDivider}></div>
         <div style={styles.footer}>THANK YOU! ❤️</div>
