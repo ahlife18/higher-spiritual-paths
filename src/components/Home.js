@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { useState, useEffect } from 'react';
-
+import { useState } from 'react';  // <--- Just useState is fine
 function Home() {
   const navigate = useNavigate();
 
