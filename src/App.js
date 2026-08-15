@@ -1,4 +1,6 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';import Tarot from './components/Tarot';
+import GuardianAngel from './components/GuardianAngel';
+import AngelNumbers from './components/AngelNumbers';
 import BlogPost from './components/BlogPost';
 import Podcast from './components/Podcast';
 import Blog from './components/Blog';
@@ -39,6 +41,9 @@ function App() {
     <BrowserRouter>
       <Navbar cartCount={cart.length} />
       <Routes>
+        <Route path="/tarot" element={<Tarot />} />
+        <Route path="/guardian-angel" element={<GuardianAngel />} />
+        <Route path="/angel-numbers" element={<AngelNumbers />} />
         <Route path="/blog/:id" element={<BlogPost />} />
         <Route path="/podcast" element={<Podcast />} />
         <Route path="/blog" element={<Blog />} />
