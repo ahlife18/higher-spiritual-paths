@@ -34,6 +34,9 @@ function Navbar({ cartCount }) {
             <Link to="/blog" style={styles.dropdownItem}>📖 Blog</Link>
             <Link to="/podcast" style={styles.dropdownItem}>🎙️ Podcast</Link>
             <Link to="/daily-wisdom" style={styles.dropdownItem}>🕯️ Wisdom</Link>
+            <Link to="/tarot" style={styles.link}>🔮 Tarot</Link>
+            <Link to="/guardian-angel" style={styles.link}>👼 Guardian</Link>
+            <Link to="/angel-numbers" style={styles.link}>✨ Numbers</Link>
             <Link to="/cart" style={styles.dropdownItem}>🛒 Cart ({cartCount})</Link>
           </div>
         )}
@@ -48,6 +51,9 @@ function Navbar({ cartCount }) {
         <Link to="/blog" style={styles.link}>📖 Blog</Link>
         <Link to="/podcast" style={styles.link}>🎙️ Podcast</Link>
         <Link to="/daily-wisdom" style={styles.link}>🕯️ Wisdom</Link>
+        <Link to="/tarot" style={styles.dropdownItem}>🔮 Tarot</Link>
+        <Link to="/guardian-angel" style={styles.dropdownItem}>👼 Guardian</Link>
+        <Link to="/angel-numbers" style={styles.dropdownItem}>✨ Numbers</Link>
         <Link to="/cart" style={styles.link}>
           🛒 {cartCount > 0 && <span style={styles.badge}>{cartCount}</span>}
         </Link>
