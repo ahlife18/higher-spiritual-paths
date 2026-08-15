@@ -3,58 +3,77 @@ import { useState } from 'react';
 function Tarot() {
   const [selectedCard, setSelectedCard] = useState(null);
   const [isReadingOpen, setIsReadingOpen] = useState(false);
+  const [pickedCardIds, setPickedCardIds] = useState([]);
 
-  // Deep Tarot Database with Real Image Links
+  // HIGH-QUALITY RIDER-WAITE TAROT IMAGES (Real, Professional Art)
   const tarotDeck = [
     {
       id: 1,
       name: "The High Priestess",
-      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/RWS_Tarot_02_High_Priestess.jpg/300px-RWS_Tarot_02_High_Priestess.jpg",
+      image: "https://i.pinimg.com/736x/c3/3d/98/c33d982db45732e4316e289e00c2768a.jpg",
       shortDesc: "Intuition, Hidden Knowledge, the Subconscious.",
-      story: "The High Priestess sits between the pillars of light and shadow. She represents the gateway to the unseen realms. She holds the scroll of divine knowledge, reminding us that true wisdom is not found in the external world, but within the silence of our own souls.",
-      meaning: "You are being called to trust your intuition above all else. Logic and reason will not give you the answers you seek right now. Pay attention to your dreams, your gut feelings, and the subtle whispers of your inner voice. The universe is speaking to you in quiet ways—you must create the silence to hear it.",
-      reversed: "Beware of ignoring your intuition, suppressing your emotions, or hiding from the truth. You may be blocking your own psychic abilities out of fear. Let go of the need to control and allow your inner wisdom to surface."
+      story: "The High Priestess sits between the pillars of light and shadow, representing the gateway to the unseen realms. She holds the scroll of divine knowledge, reminding us that true wisdom is not found outside, but within the silence of our own souls.",
+      meaning: "You are being called to trust your intuition above all else. Logic and reason will not give you the answers right now. Pay attention to your dreams, your gut feelings, and the subtle whispers of your inner voice. Create the silence to hear the universe.",
+      reversed: "Beware of ignoring your intuition or suppressing your emotions. You may be blocking your own psychic abilities out of fear. Let go of the need to control and allow your inner wisdom to surface."
     },
     {
       id: 2,
       name: "The Magician",
-      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/RWS_Tarot_01_Magician.jpg/300px-RWS_Tarot_01_Magician.jpg",
+      image: "https://i.pinimg.com/736x/c0/48/c0/c048c0486b4fad988a4bf58145df9613.jpg",
       shortDesc: "Manifestation, Action, Resourcefulness.",
-      story: "The Magician stands with one hand pointing to the heavens and the other to the earth. He is the bridge between the divine and the material. The tools of the four suits lie before him, reminding us that we already possess everything we need to manifest our reality.",
-      meaning: "You have all the tools and skills necessary to achieve your desires. The universe is waiting for you to take action. Stop waiting for the perfect moment—create it. Your thoughts, words, and deeds are aligning to bring your dreams into physical form.",
-      reversed: "You may be feeling blocked or lacking confidence. There is a tendency to manipulate situations or people to get what you want. Be honest with yourself and others. Use your power for good, not control."
+      story: "The Magician stands with one hand pointing to the heavens and the other to the earth. He is the bridge between the divine and the material. The tools of the four suits lie before him, reminding us we already possess everything we need to manifest our reality.",
+      meaning: "You have all the tools and skills to achieve your desires. The universe is waiting for you to take action. Stop waiting for the perfect moment—create it. Your thoughts, words, and deeds are aligning to bring your dreams into form.",
+      reversed: "You may be feeling blocked or lacking confidence. There is a tendency to manipulate situations. Be honest with yourself and others. Use your power for good, not control."
     },
     {
       id: 3,
       name: "The Fool",
-      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/RWS_Tarot_00_Fool.jpg/300px-RWS_Tarot_00_Fool.jpg",
+      image: "https://i.pinimg.com/736x/c3/fd/29/c3fd29279eb5197c1719c84eb9317774.jpg",
       shortDesc: "New Beginnings, Adventure, Faith.",
-      story: "The Fool stands at the edge of a cliff, holding a single rose, looking up at the sky. He carries nothing with him but a small bag, representing his pure innocence. He is about to step into the unknown with complete trust in the universe.",
-      meaning: "You are standing at the threshold of a brand new chapter. Do not let fear of the unknown hold you back. Take the leap! This is a time for spontaneity, exploration, and embracing a beginner's mind. The universe will catch you if you fall.",
-      reversed: "You may be feeling reckless, foolish, or afraid to commit. Examine your fears. Are you running away from something? Be cautious, but do not let paralysis stop you from moving forward."
+      story: "The Fool stands at the edge of a cliff, holding a single rose, looking up at the sky. He carries nothing but a small bag, representing pure innocence. He is about to step into the unknown with complete trust in the universe.",
+      meaning: "You are standing at the threshold of a brand new chapter. Do not let fear hold you back. Take the leap! This is a time for spontaneity, exploration, and embracing a beginner's mind. The universe will catch you.",
+      reversed: "You may be feeling reckless, foolish, or afraid to commit. Examine your fears. Are you running away from something? Be cautious, but do not let paralysis stop you."
     },
     {
       id: 4,
       name: "The Empress",
-      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/RWS_Tarot_03_Empress.jpg/300px-RWS_Tarot_03_Empress.jpg",
+      image: "https://i.pinimg.com/736x/e3/40/9c/e3409c33433e4a2197317473579ca88b.jpg",
       shortDesc: "Abundance, Creativity, Nurturing.",
-      story: "The Empress sits upon a throne, surrounded by a lush field of golden wheat. She is the archetype of Mother Earth, representing the unlimited growth that comes when we nurture ourselves and our creative endeavors.",
-      meaning: "You are entering a period of immense growth, prosperity, and creativity. Nurture your projects and your relationships. Take time to connect with nature and find beauty in your daily life. You are being called to create a sanctuary for yourself and others.",
+      story: "The Empress sits upon a throne surrounded by a lush field of golden wheat. She is the archetype of Mother Earth, representing the unlimited growth that comes when we nurture ourselves and our creative endeavors.",
+      meaning: "You are entering a period of immense growth, prosperity, and creativity. Nurture your projects and relationships. Take time to connect with nature and find beauty in your daily life. Create a sanctuary for yourself and others.",
       reversed: "You may be feeling drained, uncreative, or overly dependent on others. Reconnect with your own needs. Stop giving away all your energy and take time to replenish your own well."
     },
     {
       id: 5,
       name: "The Star",
-      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/RWS_Tarot_17_Star.jpg/300px-RWS_Tarot_17_Star.jpg",
+      image: "https://i.pinimg.com/736x/c1/e2/90/c1e29011d7402c6578dab33f05c6309d.jpg",
       shortDesc: "Hope, Healing, Spiritual Connection.",
-      story: "A woman kneels at the edge of a pool, pouring water to nourish the earth and the sky. Above her, a large, brilliant star shines brightly. She represents the eternal hope that guides us through even the darkest nights.",
+      story: "A woman kneels at the edge of a pool, pouring water to nourish the earth and the sky. Above her, a large, brilliant star shines. She represents the eternal hope that guides us through even the darkest nights.",
       meaning: "This is a card of profound healing and optimism. No matter how dark things have been, light is breaking through. You are being guided toward a brighter future. Your faith is being rewarded. Let your inner light shine for others to see.",
       reversed: "You may be feeling hopeless, disconnected, or lacking faith. It is time to step back and re-examine your beliefs. Sometimes healing requires us to sit with our pain first. Reach out for support; you don't have to walk this path alone."
     }
   ];
 
-  const handleCardClick = (card) => {
-    setSelectedCard(card);
+  // ✅ RANDOM SELECTION LOGIC: Prevents picking the same card twice
+  const handleCardClick = () => {
+    // Filter out the cards that have already been picked
+    const availableCards = tarotDeck.filter(card => !pickedCardIds.includes(card.id));
+    
+    // If all cards have been picked, reset the history
+    if (availableCards.length === 0) {
+      setPickedCardIds([]);
+      const randomPick = tarotDeck[Math.floor(Math.random() * tarotDeck.length)];
+      setSelectedCard(randomPick);
+      setIsReadingOpen(true);
+      return;
+    }
+
+    // Pick a random card from the available ones
+    const randomPick = availableCards[Math.floor(Math.random() * availableCards.length)];
+    
+    // Add the picked card to the history so it won't be picked again immediately
+    setPickedCardIds([...pickedCardIds, randomPick.id]);
+    setSelectedCard(randomPick);
     setIsReadingOpen(true);
   };
 
@@ -65,7 +84,6 @@ function Tarot() {
 
   return (
     <div style={styles.pageContainer}>
-      {/* ANGEL EDGES DECORATION */}
       <div style={styles.angelEdgeTop}>🕊️ ✦ 🕊️</div>
 
       <h1 style={styles.title}>🔮 Divine Tarot Reading</h1>
@@ -77,7 +95,7 @@ function Tarot() {
         {tarotDeck.map((card, index) => (
           <div 
             key={card.id} 
-            onClick={() => handleCardClick(card)} 
+            onClick={handleCardClick} 
             style={{
               ...styles.fanCard,
               transform: `rotate(${(index - 2) * 12}deg) translateY(${Math.abs(index - 2) * -10}px)`,
@@ -89,6 +107,9 @@ function Tarot() {
           </div>
         ))}
       </div>
+
+      {/* ✅ "Choose One" Text */}
+      <h3 style={styles.chooseOneText}>Choose One Card</h3>
 
       <div style={styles.angelEdgeBottom}>🕊️ ✦ 🕊️</div>
 
@@ -210,6 +231,13 @@ const styles = {
     fontSize: '0.8rem',
     padding: '5px',
     textAlign: 'center'
+  },
+  chooseOneText: {
+    marginTop: '2rem',
+    fontSize: '1.5rem',
+    color: '#fff',
+    fontWeight: 'bold',
+    textShadow: '0 2px 10px rgba(0,0,0,0.3)'
   },
   modalOverlay: {
     position: 'fixed',
