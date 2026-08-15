@@ -10,131 +10,53 @@ function Home() {
     visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
   };
 
-  // --- ANGEL NUMBER DATABASE (Deep Meanings) ---
-  const angelMeanings = {
-    '111': { 
-      short: 'Manifestation & New Beginnings.', 
-      long: 'The universe is aligning to support your thoughts. You are a powerful creator. Whatever you are focusing on right now is beginning to take form. Stay positive, stay clear, and trust that you are exactly where you need to be. This is a sign that your angels are working behind the scenes to manifest your desires. Keep your vibrations high and watch your reality shift.' 
-    },
-    '222': { 
-      short: 'Balance, Harmony, and Trust.', 
-      long: 'You are being asked to trust the process. Things may feel chaotic, but the universe is orchestrating a perfect balance. This number appears when you need to pause, breathe, and have faith. Do not force outcomes. Trust that the right doors will open at the right time. Your angels are reminding you that you are exactly where you need to be.' 
-    },
-    '333': { 
-      short: 'Divine Protection & Awakening.', 
-      long: 'This is a call to awaken to your spiritual gifts. The ascended masters are near, offering guidance and protection. You are being supported in your path. If you have been feeling a pull towards a spiritual practice, a new study, or a deeper connection, this is the confirmation you have been waiting for. Step forward with courage. You are not alone.' 
-    },
-    '444': { 
-      short: 'Angels Are With You.', 
-      long: 'A sign of strong foundation and stability. Your angels are surrounding you with unconditional love and protection. This number often appears when you are building something important in your life—whether it is a business, a relationship, or a home. Trust that your hard work is being seen, and the foundation you are laying right now is solid. Keep going.' 
-    },
-    '555': { 
-      short: 'Major Transformation is Here.', 
-      long: 'Change is not just coming—it is already here. Embrace it fully. This number signifies a major life shift that is necessary for your growth. It may feel uncomfortable, but it is clearing the path for something greater. Release fear, let go of the old, and embrace the new chapter that is unfolding. The universe is pushing you forward because it knows you are ready.' 
-    },
-    '666': { 
-      short: 'Reflect and Realign.', 
-      long: 'A gentle reminder to bring your mind and spirit into balance. This number does not signify evil, but rather an invitation to realign your thoughts and actions with your highest good. Are you overthinking? Are you focusing on fears rather than faith? Pause. Reflect. Adjust your mindset and bring your vibration back to harmony.' 
-    },
-    '777': { 
-      short: 'Good Fortune & Alignment.', 
-      long: 'This is a sign that you are in perfect spiritual alignment. Your hard work and inner growth are paying off. Miracles and lucky breaks are heading your way. This is a time to trust your intuition, as your inner knowing is currently speaking to you louder than ever. Listen closely, and follow the guidance you receive.' 
-    },
-    '888': { 
-      short: 'Abundance & Prosperity.', 
-      long: 'A powerful sign of financial and spiritual abundance. A cycle is ending, and a new, more prosperous one is beginning. This number often appears when you are about to experience a major windfall, a career breakthrough, or a shift in your wealth consciousness. Be open to receiving. You have worked hard, and the universe is ready to reward you.' 
-    },
-    '999': { 
-      short: 'Completion & A New Chapter.', 
-      long: 'You have reached the end of a major cycle in your life. It is time to close this chapter with gratitude and grace. The number 9 represents the culmination of wisdom and experience. As you complete this phase, you are being called to let go of what no longer serves you. Trust that the door closing is making way for a much better one to open.' 
-    }
-  };
+  // --- LARGE POOL OF ANGEL NUMBER MEANINGS ---
+  const angelPool = [
+    { short: 'Divine Alignment.', long: 'The universe is orchestrating a perfect alignment for you. Trust that everything you are experiencing is leading you toward your highest good. Stay grounded and open to receiving.' },
+    { short: 'Trust Your Intuition.', long: 'Your inner voice is speaking louder than ever. This is a sign that you must trust your gut feelings, even if they don’t make logical sense. Your intuition is your direct line to divine guidance.' },
+    { short: 'New Opportunities Arriving.', long: 'A door you have been waiting for is about to open. Prepare yourself to step through it with confidence and faith. The universe is presenting you with a chance to grow.' },
+    { short: 'Release and Let Go.', long: 'You are being asked to release control and trust the flow of life. Holding on too tightly is blocking your blessings. Surrender to the process and let the universe guide you.' },
+    { short: 'You Are on the Right Path.', long: 'Even if things feel uncertain right now, you are exactly where you are meant to be. Trust the timing of your life. Your journey is unfolding perfectly.' },
+    { short: 'Stay Positive & Focused.', long: 'Your thoughts are powerful. This number is a reminder to focus on what you want, not what you fear. Keep your vibration high and watch your reality shift.' },
+    { short: 'Spiritual Awakening.', long: 'You are undergoing a deep spiritual transformation. Old beliefs are falling away, making room for a higher truth. Embrace the change—you are evolving.' },
+    { short: 'Balance & Harmony.', long: 'Your angels are reminding you to bring balance to your life. Check in with your mind, body, and spirit. Restore harmony where there is chaos.' },
+    { short: 'Protected by Light.', long: 'You are surrounded by a protective shield of divine light. Fear not the challenges ahead. You are safe, guided, and deeply loved by the universe.' },
+    { short: 'A Miracle is Coming.', long: 'Something wonderful is on its way to you. It may arrive in an unexpected form, but it will bring you immense joy and relief. Stay open to receiving.' },
+    { short: 'Healing Energy.', long: 'You are being bathed in restorative energy. If you have been feeling tired, stressed, or unwell, healing is on its way. Rest and allow the universe to restore you.' },
+    { short: 'Take Inspired Action.', long: 'It is not enough to dream—you must act. This number is a call to take a step, no matter how small, toward your goals. The universe will meet you halfway.' },
+    { short: 'Patience is Key.', long: 'Great things take time. Do not rush the process. The seed you have planted is growing, even if you cannot see it yet. Trust the slow work of the universe.' },
+    { short: 'You Are Loved.', long: 'The universe is sending you a reminder that you are unconditionally loved. Not because of what you do, but because of who you are. You are worthy of love and abundance.' },
+    { short: 'Shadow Work.', long: 'It is time to look within and heal the parts of yourself you have been avoiding. Facing your shadows is the path to true liberation. You are strong enough to do this.' }
+  ];
 
   const [angelNumber, setAngelNumber] = useState('');
-  const [angelMeaning, setAngelMeaning] = useState('');
+  const [angelMeaning, setAngelMeaning] = useState({ short: '', long: '' });
   const [showFullMeaning, setShowFullMeaning] = useState(false);
 
   const getAngelNumber = () => {
+    // Step 1: Generate a random 3-digit number (100 - 999)
     const num = Math.floor(100 + Math.random() * 900).toString();
     setAngelNumber(num);
-    const data = angelMeanings[num];
-    if (data) {
-      setAngelMeaning(data);
-      setShowFullMeaning(false);
-    } else {
-      setAngelMeaning({
-        short: 'A Unique Message for You.',
-        long: 'This number holds a unique and deeply personal vibration for you today. Look at it and reflect: What was on your mind when this number appeared? Trust that your angels are communicating directly with you, and the answer is already within your heart.'
-      });
-      setShowFullMeaning(false);
-    }
+    
+    // Step 2: Pick a RANDOM meaning from the pool
+    const randomIndex = Math.floor(Math.random() * angelPool.length);
+    const chosenMeaning = angelPool[randomIndex];
+    
+    setAngelMeaning(chosenMeaning);
+    setShowFullMeaning(false); // Reset the "Read More" toggle
   };
 
-  // --- LIFE PATH DETAILED READINGS ---
+  // --- LIFE PATH MEANINGS ---
   const lifePathMeanings = {
-    '1': {
-      title: 'The Leader',
-      personality: 'Independent, ambitious, driven, and courageous. You are born to lead and inspire.',
-      strengths: 'Confidence, originality, determination, and the ability to create your own reality.',
-      weaknesses: 'Stubbornness, impatience, and a tendency to take on too much alone.',
-      purpose: 'Your life purpose is to master self-reliance and use your unique gifts to pave the way for others. You are here to break new ground.'
-    },
-    '2': {
-      title: 'The Peacemaker',
-      personality: 'Diplomatic, intuitive, cooperative, and highly sensitive to the needs of others.',
-      strengths: 'Empathy, mediation skills, adaptability, and a deep sense of fairness.',
-      weaknesses: 'Over-sensitivity, indecisiveness, and a tendency to avoid conflict.',
-      purpose: 'Your life purpose is to bring harmony and balance to your relationships and your community. You are the glue that holds people together.'
-    },
-    '3': {
-      title: 'The Creative',
-      personality: 'Expressive, optimistic, artistic, and full of joy and enthusiasm.',
-      strengths: 'Communication, creativity, charisma, and a natural ability to uplift others.',
-      weaknesses: 'Scatter-brained, moodiness, and a tendency to over-promise.',
-      purpose: 'Your life purpose is to express your unique creativity and inspire others to find their own joy. You are here to bring color and light to the world.'
-    },
-    '4': {
-      title: 'The Builder',
-      personality: 'Practical, disciplined, grounded, and incredibly hardworking.',
-      strengths: 'Reliability, organization, patience, and a strong work ethic.',
-      weaknesses: 'Stubbornness, rigidity, and a fear of change.',
-      purpose: 'Your life purpose is to build a solid, secure foundation for yourself and those you love. You are the architect of your own world.'
-    },
-    '5': {
-      title: 'The Freedom Seeker',
-      personality: 'Adventurous, versatile, curious, and deeply passionate about life.',
-      strengths: 'Adaptability, charisma, open-mindedness, and a love for variety.',
-      weaknesses: 'Restlessness, impulsiveness, and a fear of commitment.',
-      purpose: 'Your life purpose is to explore, seek freedom, and inspire others to break free from their own limitations. You are a catalyst for change.'
-    },
-    '6': {
-      title: 'The Nurturer',
-      personality: 'Caring, responsible, protective, and deeply devoted to family and community.',
-      strengths: 'Compassion, generosity, intuition, and a natural healing ability.',
-      weaknesses: 'Smothering behavior, self-sacrifice, and a tendency to carry the world on your shoulders.',
-      purpose: 'Your life purpose is to serve, heal, and nurture those around you. You are the heart of your community.'
-    },
-    '7': {
-      title: 'The Seeker',
-      personality: 'Analytical, spiritual, introspective, and deeply drawn to the mysteries of life.',
-      strengths: 'Wisdom, logic, deep thinking, and a natural ability to uncover hidden truths.',
-      weaknesses: 'Isolation, over-analysis, and a tendency to withdraw from the world.',
-      purpose: 'Your life purpose is to seek knowledge, understand the unseen, and share your deep insights with humanity.'
-    },
-    '8': {
-      title: 'The Achiever',
-      personality: 'Ambitious, powerful, authoritative, and a natural-born leader.',
-      strengths: 'Strong will, business acumen, organization, and the ability to manifest wealth.',
-      weaknesses: 'Workaholism, arrogance, and a tendency to prioritize success over relationships.',
-      purpose: 'Your life purpose is to master the material world and use your power and abundance to uplift others.'
-    },
-    '9': {
-      title: 'The Humanitarian',
-      personality: 'Generous, artistic, wise, and deeply connected to the universal consciousness.',
-      strengths: 'Compassion, forgiveness, wisdom, and a broad understanding of the human experience.',
-      weaknesses: 'Self-neglect, martyrdom, and a tendency to give until you are empty.',
-      purpose: 'Your life purpose is to serve humanity in a global and selfless way. You are here to complete cycles and pave the way for the next generation.'
-    }
+    '1': { title: 'The Leader', personality: 'Independent, ambitious, driven, and courageous.', strengths: 'Confidence, originality, determination.', weaknesses: 'Stubbornness, impatience.', purpose: 'To master self-reliance and pave the way for others.' },
+    '2': { title: 'The Peacemaker', personality: 'Diplomatic, intuitive, cooperative, and highly sensitive.', strengths: 'Empathy, mediation skills, adaptability.', weaknesses: 'Over-sensitivity, indecisiveness.', purpose: 'To bring harmony and balance to relationships.' },
+    '3': { title: 'The Creative', personality: 'Expressive, optimistic, artistic, and full of joy.', strengths: 'Communication, creativity, charisma.', weaknesses: 'Scatter-brained, moodiness.', purpose: 'To express creativity and inspire joy.' },
+    '4': { title: 'The Builder', personality: 'Practical, disciplined, grounded, and hardworking.', strengths: 'Reliability, organization, patience.', weaknesses: 'Stubbornness, rigidity.', purpose: 'To build a secure foundation for self and others.' },
+    '5': { title: 'The Freedom Seeker', personality: 'Adventurous, versatile, curious, and passionate.', strengths: 'Adaptability, charisma, open-mindedness.', weaknesses: 'Restlessness, impulsiveness.', purpose: 'To explore, seek freedom, and inspire change.' },
+    '6': { title: 'The Nurturer', personality: 'Caring, responsible, protective, and devoted.', strengths: 'Compassion, generosity, intuition.', weaknesses: 'Smothering behavior, self-sacrifice.', purpose: 'To serve, heal, and nurture the community.' },
+    '7': { title: 'The Seeker', personality: 'Analytical, spiritual, introspective, and wise.', strengths: 'Wisdom, logic, deep thinking.', weaknesses: 'Isolation, over-analysis.', purpose: 'To seek hidden truths and share deep insights.' },
+    '8': { title: 'The Achiever', personality: 'Ambitious, powerful, authoritative, and strong-willed.', strengths: 'Business acumen, organization, manifestation.', weaknesses: 'Workaholism, arrogance.', purpose: 'To master the material world and uplift others.' },
+    '9': { title: 'The Humanitarian', personality: 'Generous, artistic, wise, and deeply connected.', strengths: 'Compassion, forgiveness, global perspective.', weaknesses: 'Self-neglect, martyrdom.', purpose: 'To serve humanity and complete great cycles.' }
   };
 
   const [birthDate, setBirthDate] = useState('');
@@ -154,7 +76,7 @@ function Home() {
     setLifePathData(lifePathMeanings[numStr]);
   };
 
-  // --- ZODIAC & BIRTH CHART CALCULATOR ---
+  // --- ZODIAC & ELEMENTS ---
   const [zodiacDate, setZodiacDate] = useState('');
   const [zodiacResult, setZodiacResult] = useState(null);
 
@@ -165,40 +87,39 @@ function Home() {
     const month = date.getMonth() + 1;
     const day = date.getDate();
 
-    let sign = '', traits = '', strengths = '', weaknesses = '', bestMatch = '', purpose = '';
+    let sign = '', element = '', traits = '', strengths = '', weaknesses = '', bestMatch = '', purpose = '';
 
     if ((month === 3 && day >= 21) || (month === 4 && day <= 19)) {
-      sign = 'Aries'; traits = 'Courageous, determined, confident, and optimistic.'; strengths = 'Leadership, bravery, and enthusiasm.'; weaknesses = 'Impulsiveness, impatience, and a short temper.'; bestMatch = 'Leo & Sagittarius'; purpose = 'To initiate and inspire.';
+      sign = 'Aries'; element = '🔥 Fire'; traits = 'Courageous, determined, confident, and optimistic.'; strengths = 'Leadership, bravery, enthusiasm.'; weaknesses = 'Impulsiveness, impatience.'; bestMatch = 'Leo & Sagittarius'; purpose = 'To initiate and inspire.';
     } else if ((month === 4 && day >= 20) || (month === 5 && day <= 20)) {
-      sign = 'Taurus'; traits = 'Reliable, patient, practical, and devoted.'; strengths = 'Stability, loyalty, and a love for beauty.'; weaknesses = 'Stubbornness, possessiveness, and resistance to change.'; bestMatch = 'Virgo & Capricorn'; purpose = 'To build and preserve.';
+      sign = 'Taurus'; element = '🌍 Earth'; traits = 'Reliable, patient, practical, and devoted.'; strengths = 'Stability, loyalty, a love for beauty.'; weaknesses = 'Stubbornness, possessiveness.'; bestMatch = 'Virgo & Capricorn'; purpose = 'To build and preserve.';
     } else if ((month === 5 && day >= 21) || (month === 6 && day <= 20)) {
-      sign = 'Gemini'; traits = 'Gentle, curious, adaptable, and intellectual.'; strengths = 'Communication, wit, and versatility.'; weaknesses = 'Indecisiveness, inconsistency, and nervousness.'; bestMatch = 'Libra & Aquarius'; purpose = 'To connect and communicate.';
+      sign = 'Gemini'; element = '💨 Air'; traits = 'Gentle, curious, adaptable, and intellectual.'; strengths = 'Communication, wit, versatility.'; weaknesses = 'Indecisiveness, inconsistency.'; bestMatch = 'Libra & Aquarius'; purpose = 'To connect and communicate.';
     } else if ((month === 6 && day >= 21) || (month === 7 && day <= 22)) {
-      sign = 'Cancer'; traits = 'Tenacious, highly intuitive, emotional, and sympathetic.'; strengths = 'Empathy, protection, and a nurturing nature.'; weaknesses = 'Over-sensitivity, moodiness, and a tendency to cling.'; bestMatch = 'Scorpio & Pisces'; purpose = 'To nurture and protect.';
+      sign = 'Cancer'; element = '💧 Water'; traits = 'Tenacious, highly intuitive, emotional, and sympathetic.'; strengths = 'Empathy, protection, nurturing.'; weaknesses = 'Over-sensitivity, moodiness.'; bestMatch = 'Scorpio & Pisces'; purpose = 'To nurture and protect.';
     } else if ((month === 7 && day >= 23) || (month === 8 && day <= 22)) {
-      sign = 'Leo'; traits = 'Creative, passionate, generous, and warm-hearted.'; strengths = 'Charisma, leadership, and creativity.'; weaknesses = 'Arrogance, pride, and a need for constant attention.'; bestMatch = 'Aries & Sagittarius'; purpose = 'To shine and inspire.';
+      sign = 'Leo'; element = '🔥 Fire'; traits = 'Creative, passionate, generous, and warm-hearted.'; strengths = 'Charisma, leadership, creativity.'; weaknesses = 'Arrogance, pride.'; bestMatch = 'Aries & Sagittarius'; purpose = 'To shine and inspire.';
     } else if ((month === 8 && day >= 23) || (month === 9 && day <= 22)) {
-      sign = 'Virgo'; traits = 'Loyal, analytical, kind, hardworking, and practical.'; strengths = 'Perfectionism, intelligence, and a strong work ethic.'; weaknesses = 'Over-critical, worrying, and perfectionistic.'; bestMatch = 'Taurus & Capricorn'; purpose = 'To serve and heal.';
+      sign = 'Virgo'; element = '🌍 Earth'; traits = 'Loyal, analytical, kind, hardworking, and practical.'; strengths = 'Perfectionism, intelligence, work ethic.'; weaknesses = 'Over-critical, worrying.'; bestMatch = 'Taurus & Capricorn'; purpose = 'To serve and heal.';
     } else if ((month === 9 && day >= 23) || (month === 10 && day <= 22)) {
-      sign = 'Libra'; traits = 'Social, fair-minded, diplomatic, and gracious.'; strengths = 'Diplomacy, charm, and a love for balance.'; weaknesses = 'Indecisiveness, avoidance of conflict, and a tendency to be superficial.'; bestMatch = 'Gemini & Aquarius'; purpose = 'To bring balance and justice.';
+      sign = 'Libra'; element = '💨 Air'; traits = 'Social, fair-minded, diplomatic, and gracious.'; strengths = 'Diplomacy, charm, balance.'; weaknesses = 'Indecisiveness, conflict avoidance.'; bestMatch = 'Gemini & Aquarius'; purpose = 'To bring balance and justice.';
     } else if ((month === 10 && day >= 23) || (month === 11 && day <= 21)) {
-      sign = 'Scorpio'; traits = 'Resourceful, brave, passionate, and stubborn.'; strengths = 'Determination, intuition, and a powerful presence.'; weaknesses = 'Jealousy, suspicion, and a tendency to be controlling.'; bestMatch = 'Cancer & Pisces'; purpose = 'To transform and regenerate.';
+      sign = 'Scorpio'; element = '💧 Water'; traits = 'Resourceful, brave, passionate, and stubborn.'; strengths = 'Determination, intuition, presence.'; weaknesses = 'Jealousy, suspicion.'; bestMatch = 'Cancer & Pisces'; purpose = 'To transform and regenerate.';
     } else if ((month === 11 && day >= 22) || (month === 12 && day <= 21)) {
-      sign = 'Sagittarius'; traits = 'Generous, idealistic, optimistic, and adventurous.'; strengths = 'Honesty, philosophical thinking, and a love for freedom.'; weaknesses = 'Bluntness, restlessness, and a fear of commitment.'; bestMatch = 'Aries & Leo'; purpose = 'To explore and expand.';
+      sign = 'Sagittarius'; element = '🔥 Fire'; traits = 'Generous, idealistic, optimistic, and adventurous.'; strengths = 'Honesty, philosophical, freedom-loving.'; weaknesses = 'Bluntness, restlessness.'; bestMatch = 'Aries & Leo'; purpose = 'To explore and expand.';
     } else if ((month === 12 && day >= 22) || (month === 1 && day <= 19)) {
-      sign = 'Capricorn'; traits = 'Responsible, disciplined, and self-controlled.'; strengths = 'Ambition, discipline, and a strong sense of duty.'; weaknesses = 'Pessimism, rigidity, and workaholism.'; bestMatch = 'Taurus & Virgo'; purpose = 'To achieve and lead.';
+      sign = 'Capricorn'; element = '🌍 Earth'; traits = 'Responsible, disciplined, and self-controlled.'; strengths = 'Ambition, discipline, duty.'; weaknesses = 'Pessimism, rigidity.'; bestMatch = 'Taurus & Virgo'; purpose = 'To achieve and lead.';
     } else if ((month === 1 && day >= 20) || (month === 2 && day <= 18)) {
-      sign = 'Aquarius'; traits = 'Progressive, original, independent, and humanitarian.'; strengths = 'Inventiveness, objectivity, and a love for humanity.'; weaknesses = 'Detachment, rebellion, and unpredictability.'; bestMatch = 'Gemini & Libra'; purpose = 'To innovate and liberate.';
+      sign = 'Aquarius'; element = '💨 Air'; traits = 'Progressive, original, independent, and humanitarian.'; strengths = 'Inventiveness, objectivity, humanity.'; weaknesses = 'Detachment, rebellion.'; bestMatch = 'Gemini & Libra'; purpose = 'To innovate and liberate.';
     } else {
-      sign = 'Pisces'; traits = 'Compassionate, artistic, intuitive, and gentle.'; strengths = 'Creativity, empathy, and a deep spiritual connection.'; weaknesses = 'Escapism, over-sensitivity, and a lack of boundaries.'; bestMatch = 'Cancer & Scorpio'; purpose = 'To dream and heal.';
+      sign = 'Pisces'; element = '💧 Water'; traits = 'Compassionate, artistic, intuitive, and gentle.'; strengths = 'Creativity, empathy, spiritual connection.'; weaknesses = 'Escapism, over-sensitivity.'; bestMatch = 'Cancer & Scorpio'; purpose = 'To dream and heal.';
     }
 
-    setZodiacResult({ sign, traits, strengths, weaknesses, bestMatch, purpose });
+    setZodiacResult({ sign, element, traits, strengths, weaknesses, bestMatch, purpose });
   };
 
   return (
     <div style={styles.container}>
-      
       <motion.div initial="hidden" animate="visible" variants={fadeUp} style={styles.hero}>
         <div style={styles.heroContent}>
           <p style={styles.heroSubtitle}>HIGHER SPIRITUAL PATHS</p>
@@ -219,7 +140,7 @@ function Home() {
         <div style={styles.card}>
           <div style={styles.angelNumberDisplay}>{angelNumber || '???'}</div>
           <button onClick={getAngelNumber} style={styles.actionBtn}>Reveal Today's Number</button>
-          {angelMeaning && (
+          {angelMeaning.short && (
             <div style={styles.meaningContainer}>
               <p style={styles.meaningText}>{angelMeaning.short}</p>
               <p style={styles.meaningLongText}>
@@ -254,7 +175,7 @@ function Home() {
         </div>
       </motion.div>
 
-      {/* --- ZODIAC & ASTROLOGY --- */}
+      {/* --- ZODIAC & BIRTH CHART --- */}
       <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={fadeUp} style={styles.sectionLavender}>
         <h2 style={styles.headingDarkPurple}>🌙 Zodiac & Birth Chart</h2>
         <div style={styles.card}>
@@ -265,6 +186,7 @@ function Home() {
           {zodiacResult && (
             <div style={styles.resultContainer}>
               <h3 style={styles.resultNumber}>{zodiacResult.sign}</h3>
+              <p><strong>Element:</strong> {zodiacResult.element}</p>
               <p><strong>Traits:</strong> {zodiacResult.traits}</p>
               <p><strong>Strengths:</strong> {zodiacResult.strengths}</p>
               <p><strong>Weaknesses:</strong> {zodiacResult.weaknesses}</p>
@@ -275,7 +197,7 @@ function Home() {
         </div>
       </motion.div>
 
-      {/* --- FEED --- */}
+      {/* --- LATEST INSIGHTS --- */}
       <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={fadeUp} style={styles.sectionWhite}>
         <h2 style={styles.headingDark}>📖 Latest Insights</h2>
         <div style={styles.feedGrid}>
@@ -310,7 +232,6 @@ function Home() {
         <div style={styles.footerDivider}></div>
         <div style={styles.footer}>THANK YOU! ❤️</div>
       </motion.div>
-
     </div>
   );
 }
