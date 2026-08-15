@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import BlogPost from './components/BlogPost';
 import Podcast from './components/Podcast';
 import Blog from './components/Blog';
 import DailyWisdom from './components/DailyWisdom';
@@ -38,6 +39,7 @@ function App() {
     <BrowserRouter>
       <Navbar cartCount={cart.length} />
       <Routes>
+        <Route path="/blog/:id" element={<BlogPost />} />
         <Route path="/podcast" element={<Podcast />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/daily-wisdom" element={<DailyWisdom />} />
