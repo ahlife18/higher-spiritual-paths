@@ -1,6 +1,9 @@
 function Footer() {
   return (
     <div style={styles.footer}>
+      <div style={{ marginBottom: '10px' }}>
+          ✉️ support@higherspiritualpaths.com
+    </div>
       <p>🕯️ No Religion. All Religion. The truth is in plain sight.</p>
       <p style={styles.small}>© 2026 Higher Spiritual Paths. A Fellowship of Insight.</p>
     </div>

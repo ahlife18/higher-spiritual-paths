@@ -27,6 +27,9 @@ function Navbar({ cartCount }) {
         <span style={styles.logoIcon}>✦</span> Higher Spiritual Paths
         {isHome && dropdownOpen && (
           <div style={styles.dropdown}>
+            <Link to="/daily-wisdom" style={styles.link}>🕯️ Wisdom</Link>
+            <Link to="/blog" style={styles.link}>📖 Blog</Link>
+            <Link to="/podcast" style={styles.link}>🎙️ Podcast</Link>
             <Link to="/about" style={styles.dropdownItem}>About</Link>
             <Link to="/practices" style={styles.dropdownItem}>Practices</Link>
             <Link to="/founders" style={styles.dropdownItem}>Founders</Link>
@@ -39,6 +42,9 @@ function Navbar({ cartCount }) {
 
       <div style={styles.links}>
         <Link to="/" style={styles.link}>Home</Link>
+        <Link to="/daily-wisdom" style={styles.link}>🕯️ Wisdom</Link>
+        <Link to="/blog" style={styles.link}>📖 Blog</Link>
+        <Link to="/podcast" style={styles.link}>🎙️ Podcast</Link>
         <Link to="/about" style={styles.link}>About</Link>
         <Link to="/practices" style={styles.link}>Practices</Link>
         <Link to="/founders" style={styles.link}>Founders</Link>

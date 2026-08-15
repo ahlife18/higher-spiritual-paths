@@ -1,5 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-
+import Podcast from './components/Podcast';
+import Blog from './components/Blog';
+import DailyWisdom from './components/DailyWisdom';
 import Navbar from './components/Navbar';
 import Home from './components/Home';
 import About from './components/About';
@@ -37,6 +39,9 @@ function App() {
     <BrowserRouter>
       <Navbar cartCount={cart.length} />
       <Routes>
+        <Route path="/podcast" element={<Podcast />} />
+        <Route path="/blog" element={<Blog />} />
+        <Route path="/daily-wisdom" element={<DailyWisdom />} />
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/practices" element={<Practices />} />
