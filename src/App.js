@@ -12,7 +12,6 @@ import Contact from './components/Contact';
 import ThePath from './components/ThePath';
 import Founders from './components/Founders';
 import Footer from './components/Footer';
-import ImageUpload from './components/ImageUpload'; // ✨ NEW IMPORT
 import useLocalStorage from './hooks/useLocalStorage';
 
 function App() {
@@ -53,8 +52,6 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/the-path" element={<ThePath />} />
         <Route path="/founders" element={<Founders />} />
-        {/* ✨ NEW ROUTE: Upload Page */}
-        <Route path="/upload" element={<ImageUpload />} />
       </Routes>
       <Footer />
     </BrowserRouter>

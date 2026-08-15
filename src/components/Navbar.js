@@ -27,14 +27,13 @@ function Navbar({ cartCount }) {
         <span style={styles.logoIcon}>✦</span> Higher Spiritual Paths
         {isHome && dropdownOpen && (
           <div style={styles.dropdown}>
-            <Link to="/daily-wisdom" style={styles.link}>🕯️ Wisdom</Link>
-            <Link to="/blog" style={styles.link}>📖 Blog</Link>
-            <Link to="/podcast" style={styles.link}>🎙️ Podcast</Link>
             <Link to="/about" style={styles.dropdownItem}>About</Link>
             <Link to="/practices" style={styles.dropdownItem}>Practices</Link>
             <Link to="/founders" style={styles.dropdownItem}>Founders</Link>
             <Link to="/shop" style={styles.dropdownItem}>Shop</Link>
-            <Link to="/upload" style={styles.dropdownItem}>📤 Upload</Link>
+            <Link to="/blog" style={styles.dropdownItem}>📖 Blog</Link>
+            <Link to="/podcast" style={styles.dropdownItem}>🎙️ Podcast</Link>
+            <Link to="/daily-wisdom" style={styles.dropdownItem}>🕯️ Wisdom</Link>
             <Link to="/cart" style={styles.dropdownItem}>🛒 Cart ({cartCount})</Link>
           </div>
         )}
@@ -42,14 +41,13 @@ function Navbar({ cartCount }) {
 
       <div style={styles.links}>
         <Link to="/" style={styles.link}>Home</Link>
-        <Link to="/daily-wisdom" style={styles.link}>🕯️ Wisdom</Link>
-        <Link to="/blog" style={styles.link}>📖 Blog</Link>
-        <Link to="/podcast" style={styles.link}>🎙️ Podcast</Link>
         <Link to="/about" style={styles.link}>About</Link>
         <Link to="/practices" style={styles.link}>Practices</Link>
         <Link to="/founders" style={styles.link}>Founders</Link>
         <Link to="/shop" style={styles.link}>Shop</Link>
-        <Link to="/upload" style={styles.link}>📤 Upload</Link>
+        <Link to="/blog" style={styles.link}>📖 Blog</Link>
+        <Link to="/podcast" style={styles.link}>🎙️ Podcast</Link>
+        <Link to="/daily-wisdom" style={styles.link}>🕯️ Wisdom</Link>
         <Link to="/cart" style={styles.link}>
           🛒 {cartCount > 0 && <span style={styles.badge}>{cartCount}</span>}
         </Link>
@@ -64,10 +62,10 @@ const styles = {
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: '1rem 2rem',
-    background: '#2E1A47', // Deep Purple
+    background: '#5B2A8C',
     color: '#ffffff',
     fontFamily: 'Montserrat, sans-serif',
-    boxShadow: '0 4px 20px rgba(46, 26, 71, 0.3)',
+    boxShadow: '0 4px 20px rgba(91, 42, 140, 0.3)',
     position: 'relative',
     zIndex: 1000
   },
@@ -83,7 +81,7 @@ const styles = {
     gap: '10px'
   },
   logoIcon: {
-    color: '#D4AF37',
+    color: '#fff',
     fontSize: '1.8rem'
   },
   dropdown: {
@@ -99,7 +97,7 @@ const styles = {
     flexDirection: 'column',
     gap: '0.5rem',
     marginTop: '0.5rem',
-    border: '1px solid rgba(46, 26, 71, 0.1)',
+    border: '1px solid rgba(91, 42, 140, 0.1)',
     animation: 'fadeIn 0.3s ease'
   },
   dropdownItem: {
@@ -125,7 +123,7 @@ const styles = {
   },
   badge: {
     background: '#D4AF37',
-    color: '#2E1A47',
+    color: '#5B2A8C',
     borderRadius: '50%',
     padding: '0.2rem 0.6rem',
     fontSize: '0.8rem',
