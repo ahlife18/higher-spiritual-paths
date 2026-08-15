@@ -49,7 +49,7 @@ function DailyWisdom() {
     const index = dayOfYear % wisdoms.length;
     setWisdom(wisdoms[index]);
     setDate(today.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }));
-  }, []);
+  }, [wisdoms]);
 
   return (
     <div style={styles.container}>
