@@ -204,22 +204,45 @@ function Home() {
         </div>
       </motion.div>
 
-      {/* --- ✨ NEW: PROFESSIONAL CONTACT SECTION --- */}
+      {/* --- ✨ PROFESSIONAL CONTACT & SOCIAL SECTION --- */}
       <motion.div 
         initial="hidden" 
         whileInView="visible" 
         viewport={{ once: true, amount: 0.2 }}
         variants={fadeUp}
-        style={styles.sectionLavender}
+        style={styles.sectionWhite}
       >
-        <h2 style={styles.headingDarkPurple}>📞 Connect With Us</h2>
-        <div style={styles.contactContainer}>
-          <p style={styles.contactItem}>📞 Bennie Hollis: <span style={styles.contactBold}>+1 (352) 544-9302</span></p>
-          <p style={styles.contactItem}>📞 Karen Johnson: <span style={styles.contactBold}>+1 (716) 364-0344</span></p>
-          <p style={styles.contactItem}>📞 Kolawole Emmanuel: <span style={styles.contactBold}>+234 (810) 849-1093</span></p>
-          
+        <h2 style={styles.footerHeading}>Connect With Us</h2>
+        
+        <div style={styles.footerContainer}>
+          {/* Phone Numbers */}
+          <div style={styles.contactRow}>
+            <span style={styles.name}>Bennie Hollis</span>
+            <span style={styles.number}>+1 (352) 544-9302</span>
+          </div>
+          <div style={styles.contactRow}>
+            <span style={styles.name}>Karen Johnson</span>
+            <span style={styles.number}>+1 (716) 364-0344</span>
+          </div>
+          <div style={styles.contactRow}>
+            <span style={styles.name}>Kolawole Emmanuel</span>
+            <span style={styles.number}>+234 (810) 849-1093</span>
+          </div>
+
+          {/* Divider */}
           <div style={styles.divider}></div>
-          <p style={styles.thankYou}>THANK YOU! ❤️</p>
+          
+          {/* Facebook Icon Button with Group Link */}
+          <a 
+            href="https://facebook.com/groups/higherspiritualpaths" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            style={styles.facebookIconBtn}
+          >
+            <span style={styles.fbIcon}>f</span>
+          </a>
+
+          <p style={styles.footerTag}>No Religion. All Religion. The truth is in plain sight.</p>
         </div>
       </motion.div>
 
@@ -381,36 +404,69 @@ const styles = {
     marginBottom: '10px'
   },
 
-  // --- ✨ NEW: CONTACT & FOOTER STYLES ---
-  contactContainer: {
-    maxWidth: '500px',
+  // --- ✨ PROFESSIONAL FOOTER & SOCIAL STYLES ---
+  footerHeading: {
+    fontSize: '2.5rem',
+    fontWeight: '800',
+    color: '#2c1b13',
+    marginBottom: '2rem'
+  },
+  footerContainer: {
+    maxWidth: '600px',
     margin: '0 auto',
-    padding: '20px',
-    background: 'white',
+    padding: '2rem',
+    backgroundColor: '#fcf6f0',
     borderRadius: '20px',
-    boxShadow: '0 10px 30px rgba(0,0,0,0.05)'
+    boxShadow: '0 4px 12px rgba(0,0,0,0.02)',
+    border: '1px solid #e8e0d8'
   },
-  contactItem: {
-    fontSize: '18px',
-    lineHeight: '2.2',
-    color: '#333',
-    fontWeight: '600' /* Semi-bold */
+  contactRow: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    padding: '0.8rem 0',
+    borderBottom: '1px solid #eee',
+    fontSize: '1.1rem'
   },
-  contactBold: {
-    fontWeight: '900', /* Extra bold for the numbers */
-    color: '#5B2A8C'
+  name: {
+    fontWeight: '700',
+    color: '#2c1b13'
+  },
+  number: {
+    fontWeight: '800',
+    color: '#5B2A8C',
+    letterSpacing: '0.5px'
   },
   divider: {
     height: '1px',
-    background: 'rgba(91, 42, 140, 0.2)',
-    margin: '30px auto',
-    width: '60%'
+    background: '#e0d8d0',
+    margin: '2rem 0'
   },
-  thankYou: {
-    fontSize: '22px',
-    fontWeight: '800',
-    color: '#5B2A8C',
-    marginTop: '10px'
+  facebookIconBtn: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '60px',
+    height: '60px',
+    margin: '0 auto 2rem auto',
+    backgroundColor: '#1877F2',
+    color: '#fff',
+    borderRadius: '50%',
+    textDecoration: 'none',
+    fontWeight: '900',
+    fontSize: '2rem',
+    transition: 'all 0.3s ease',
+    boxShadow: '0 4px 10px rgba(24, 119, 242, 0.3)'
+  },
+  fbIcon: {
+    fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
+    lineHeight: '1'
+  },
+  footerTag: {
+    textAlign: 'center',
+    color: '#888',
+    fontSize: '0.95rem',
+    fontStyle: 'italic',
+    marginTop: '0.5rem'
   }
 };
 
