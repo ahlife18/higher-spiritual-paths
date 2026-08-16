@@ -204,7 +204,7 @@ function Home() {
         </div>
       </motion.div>
 
-      {/* --- ✨ PROFESSIONAL CONTACT & SOCIAL SECTION --- */}
+      {/* --- ✨ UNIQUE & PROFESSIONAL FOOTER --- */}
       <motion.div 
         initial="hidden" 
         whileInView="visible" 
@@ -212,37 +212,38 @@ function Home() {
         variants={fadeUp}
         style={styles.sectionWhite}
       >
-        <h2 style={styles.footerHeading}>Connect With Us</h2>
-        
-        <div style={styles.footerContainer}>
-          {/* Phone Numbers */}
-          <div style={styles.contactRow}>
-            <span style={styles.name}>Bennie Hollis</span>
-            <span style={styles.number}>+1 (352) 544-9302</span>
-          </div>
-          <div style={styles.contactRow}>
-            <span style={styles.name}>Karen Johnson</span>
-            <span style={styles.number}>+1 (716) 364-0344</span>
-          </div>
-          <div style={styles.contactRow}>
-            <span style={styles.name}>Kolawole Emmanuel</span>
-            <span style={styles.number}>+234 (810) 849-1093</span>
-          </div>
+        <div style={styles.footerWrapper}>
+          <h2 style={styles.footerHeading}>Connect With Us</h2>
+          <div style={styles.footerContainer}>
+            
+            <div style={styles.contactRow}>
+              <span style={styles.name}>Bennie Hollis</span>
+              <span style={styles.number}>+1 (352) 544-9302</span>
+            </div>
+            <div style={styles.contactRow}>
+              <span style={styles.name}>Karen Johnson</span>
+              <span style={styles.number}>+1 (716) 364-0344</span>
+            </div>
+            <div style={styles.contactRow}>
+              <span style={styles.name}>Kolawole Emmanuel</span>
+              <span style={styles.number}>+234 (810) 849-1093</span>
+            </div>
 
-          {/* Divider */}
-          <div style={styles.divider}></div>
-          
-          {/* Facebook Icon Button with Group Link */}
-          <a 
-            href="https://facebook.com/groups/higherspiritualpaths" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            style={styles.facebookIconBtn}
-          >
-            <span style={styles.fbIcon}>f</span>
-          </a>
+            <div style={styles.divider}></div>
+            
+            <div style={styles.socialContainer}>
+              <a 
+                href="https://facebook.com/groups/higherspiritualpaths" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                style={styles.facebookIconBtn}
+              >
+                <span style={styles.fbIcon}>f</span>
+              </a>
+            </div>
 
-          <p style={styles.footerTag}>No Religion. All Religion. The truth is in plain sight.</p>
+            <p style={styles.footerTag}>No Religion. All Religion. The truth is in plain sight.</p>
+          </div>
         </div>
       </motion.div>
 
@@ -404,12 +405,19 @@ const styles = {
     marginBottom: '10px'
   },
 
-  // --- ✨ PROFESSIONAL FOOTER & SOCIAL STYLES ---
+  // --- ✨ UNIQUE PROFESSIONAL FOOTER STYLES ---
+  footerWrapper: {
+    marginTop: '2rem',
+    paddingTop: '2rem',
+    borderTop: '2px solid #F5EEF8'
+  },
   footerHeading: {
-    fontSize: '2.5rem',
-    fontWeight: '800',
+    fontSize: '2rem',
+    fontWeight: '700',
     color: '#2c1b13',
-    marginBottom: '2rem'
+    marginBottom: '1.5rem',
+    textAlign: 'center',
+    letterSpacing: '1px'
   },
   footerContainer: {
     maxWidth: '600px',
@@ -417,22 +425,23 @@ const styles = {
     padding: '2rem',
     backgroundColor: '#fcf6f0',
     borderRadius: '20px',
-    boxShadow: '0 4px 12px rgba(0,0,0,0.02)',
-    border: '1px solid #e8e0d8'
+    boxShadow: '0 4px 15px rgba(0,0,0,0.03)'
   },
   contactRow: {
     display: 'flex',
     justifyContent: 'space-between',
-    padding: '0.8rem 0',
-    borderBottom: '1px solid #eee',
-    fontSize: '1.1rem'
+    alignItems: 'center',
+    padding: '1rem 0.5rem',
+    borderBottom: '1px solid #e8e0d8',
+    fontSize: '1.05rem'
   },
   name: {
-    fontWeight: '700',
-    color: '#2c1b13'
+    fontWeight: '600',
+    color: '#2c1b13',
+    letterSpacing: '0.5px'
   },
   number: {
-    fontWeight: '800',
+    fontWeight: '700',
     color: '#5B2A8C',
     letterSpacing: '0.5px'
   },
@@ -441,21 +450,25 @@ const styles = {
     background: '#e0d8d0',
     margin: '2rem 0'
   },
+  socialContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    marginBottom: '1.5rem'
+  },
   facebookIconBtn: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    width: '60px',
-    height: '60px',
-    margin: '0 auto 2rem auto',
+    width: '56px',
+    height: '56px',
     backgroundColor: '#1877F2',
     color: '#fff',
     borderRadius: '50%',
     textDecoration: 'none',
     fontWeight: '900',
-    fontSize: '2rem',
+    fontSize: '1.8rem',
     transition: 'all 0.3s ease',
-    boxShadow: '0 4px 10px rgba(24, 119, 242, 0.3)'
+    boxShadow: '0 4px 12px rgba(24, 119, 242, 0.2)'
   },
   fbIcon: {
     fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
