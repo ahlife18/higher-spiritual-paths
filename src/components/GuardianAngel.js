@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import emailjs from '@emailjs/browser';
 
 function GuardianAngel() {
   const [step, setStep] = useState(1);
@@ -64,74 +63,30 @@ function GuardianAngel() {
     else handleSubmit();
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
     setLoading(true);
 
     // 1. Choose the Angel
     const angel = getRandomAngel();
     setResult(angel);
 
-    // 2. Send the Email via EmailJS (No Template Required)
-    try {
-      const serviceID = 'service_bksgbfs';     // ✅ Your Service ID
-      const publicKey = '868cFAcGA6sQXfBjN';   // ✅ Your Public Key
+    // 2. Construct the beautiful email message
+    const emailSubject = encodeURIComponent('Your Guardian Angel Reading from Higher Spiritual Paths');
+    const emailBody = encodeURIComponent(
+      `Dearest ${formData.name},\n\n` +
+      `The day you were born, a very special Angel was assigned to watch over you.\n\n` +
+      `Your Guardian Archangel is ${angel.name}.\n\n` +
+      `Message from ${angel.name}:\n${angel.message}\n\n` +
+      `May this message guide you on your path.\n\n` +
+      `No Religion. All Religion. The truth is in plain sight.\n` +
+      `🕯️ Higher Spiritual Paths`
+    );
 
-      // We construct the email message directly in the code
-      const emailMessage = `
-        <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto; background: #f9f9f9; padding: 30px; border-radius: 20px; border: 1px solid #e0e0e0;">
-          <div style="text-align: center; margin-bottom: 20px;">
-            <h1 style="color: #5B2A8C;">🕯️ Higher Spiritual Paths</h1>
-            <h2 style="color: #5B2A8C;">Your Guardian Angel Reading</h2>
-          </div>
-          
-          <div style="background: white; padding: 25px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
-            <p style="font-size: 18px; font-weight: bold; color: #5B2A8C;">Dearest ${formData.name},</p>
-            
-            <p style="font-size: 16px; line-height: 1.6;">
-              The day you were born, a very special Angel was assigned to watch over you.
-            </p>
-            
-            <div style="background: #F5EEF8; padding: 20px; border-radius: 12px; margin: 20px 0; text-align: center;">
-              <h3 style="color: #5B2A8C; margin: 0;">Your Guardian Archangel is</h3>
-              <h2 style="color: #5B2A8C; font-size: 32px; margin: 5px 0;">${angel.name}</h2>
-            </div>
-            
-            <p style="font-size: 16px; line-height: 1.8; color: #444;">
-              <strong>Message from ${angel.name}:</strong><br />
-              ${angel.message}
-            </p>
-            
-            <p style="font-size: 16px; line-height: 1.6; margin-top: 20px; color: #666; font-style: italic;">
-              May this message guide you on your path.
-            </p>
-          </div>
-          
-          <div style="text-align: center; margin-top: 20px; color: #888; font-size: 14px;">
-            <p>No Religion. All Religion. The truth is in plain sight.</p>
-            <p>🕯️ Higher Spiritual Paths</p>
-          </div>
-        </div>
-      `;
+    // 3. Open the user's email client with the pre-filled message
+    window.location.href = `mailto:${formData.email}?subject=${emailSubject}&body=${emailBody}`;
 
-      // Send the email using the direct method
-      await emailjs.send(
-        serviceID, 
-        'template_xxxxxx', // Placeholder: This is ignored when using direct custom email
-        {
-          to_email: formData.email,
-          subject: 'Your Guardian Angel Reading from Higher Spiritual Paths',
-          message_html: emailMessage
-        }, 
-        publicKey
-      );
-      
-      setLoading(false);
-      setStep(5);
-    } catch (error) {
-      console.error('Email sending failed:', error);
-      setValidationError('Failed to send email. Please check your email address and try again.');
-      setLoading(false);
-    }
+    setLoading(false);
+    setStep(5);
   };
 
   const progressWidth = ((step - 1) / 4) * 100;
@@ -217,7 +172,7 @@ function GuardianAngel() {
                 <div style={styles.angelMessage}>
                   <p style={styles.messageParagraph}>{result.message}</p>
                 </div>
-                <p style={styles.emailSentMessage}>✅ Your reading has been sent to <strong>{formData.email}</strong>. Please check your inbox!</p>
+                <p style={styles.emailSentMessage}>✅ Your reading has been opened in your email app. Please send it to yourself to keep it!</p>
                 <button onClick={() => window.location.reload()} style={styles.btn}>Start Over</button>
               </div>
             ) : null}
