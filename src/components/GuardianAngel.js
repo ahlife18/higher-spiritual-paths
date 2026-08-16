@@ -6,7 +6,7 @@ function GuardianAngel() {
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  // Massive Angel Database (Simplified for demo)
+  // Angel Database
   const angels = [
     { name: 'Haniel', gender: 'female', message: 'Haniel is the angel of grace and divine beauty. She reminds you that the universe views you with unconditional love. You are here to bring harmony and elegance into the world. She has been guiding you toward self-acceptance and deeper relationships.' },
     { name: 'Raphael', gender: 'male', message: 'Raphael is the divine healer. His presence is a sign that you are being healed on a physical, emotional, or spiritual level. You are being guided to seek balance and to trust that your body and soul are mending. He brings immense light and restoration.' },
@@ -38,6 +38,12 @@ function GuardianAngel() {
 
   const progressWidth = ((step - 1) / 4) * 100;
 
+  // --- DYNAMIC DATE GENERATORS ---
+  const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  const days = Array.from({ length: 31 }, (_, i) => i + 1);
+  const currentYear = new Date().getFullYear();
+  const years = Array.from({ length: 126 }, (_, i) => currentYear - 125 + i); // 1900 to current + 10 years
+
   return (
     <div style={styles.container}>
       <div style={styles.header}>
@@ -68,14 +74,23 @@ function GuardianAngel() {
           </div>
         )}
 
-        {/* STEP 3: BIRTH DATE */}
+        {/* STEP 3: BIRTH DATE (FULL RANGES) */}
         {step === 3 && (
           <div>
             <h2 style={styles.stepTitle}>Step 3: When Were You Born?</h2>
             <div style={styles.dateGroup}>
-              <select name="birthMonth" onChange={handleInputChange} style={styles.select}><option>Month</option><option value="1">Jan</option><option value="2">Feb</option><option value="3">Mar</option></select>
-              <select name="birthDay" onChange={handleInputChange} style={styles.select}><option>Day</option><option>1</option><option>2</option></select>
-              <select name="birthYear" onChange={handleInputChange} style={styles.select}><option>Year</option><option>1990</option><option>1991</option></select>
+              <select name="birthMonth" onChange={handleInputChange} style={styles.select} required>
+                <option value="">Month</option>
+                {months.map((m, i) => <option key={i} value={i + 1}>{m}</option>)}
+              </select>
+              <select name="birthDay" onChange={handleInputChange} style={styles.select} required>
+                <option value="">Day</option>
+                {days.map(d => <option key={d} value={d}>{d}</option>)}
+              </select>
+              <select name="birthYear" onChange={handleInputChange} style={styles.select} required>
+                <option value="">Year</option>
+                {years.map(y => <option key={y} value={y}>{y}</option>)}
+              </select>
             </div>
             <button onClick={handleNext} style={styles.btn}>Continue →</button>
           </div>
@@ -127,7 +142,7 @@ const styles = {
   genderGroup: { display: 'flex', justifyContent: 'center', gap: '1rem', marginBottom: '2rem' },
   genderBtn: { padding: '15px 30px', border: 'none', borderRadius: '10px', color: '#fff', fontSize: '1rem', cursor: 'pointer' },
   dateGroup: { display: 'flex', gap: '1rem', justifyContent: 'center', marginBottom: '2rem' },
-  select: { padding: '10px', borderRadius: '10px', border: '1px solid #ddd', fontSize: '1rem' },
+  select: { padding: '10px', borderRadius: '10px', border: '1px solid #ddd', fontSize: '1rem', flex: 1, minWidth: '60px' },
   resultContainer: { padding: '1rem' },
   resultTitle: { fontSize: '1.8rem', color: '#5B2A8C' },
   resultSubtitle: { fontSize: '1.2rem', marginBottom: '2rem' },

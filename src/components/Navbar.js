@@ -4,74 +4,37 @@ import { useState } from 'react';
 function Navbar({ cartCount }) {
   const location = useLocation();
   const navigate = useNavigate();
-  const [dropdownOpen, setDropdownOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [loginModalOpen, setLoginModalOpen] = useState(false);
 
-  const isHome = location.pathname === '/';
+  const toggleMobileMenu = () => setMobileMenuOpen(!mobileMenuOpen);
+  const toggleLoginModal = () => setLoginModalOpen(!loginModalOpen);
 
-  const handleLogoClick = () => {
-    if (isHome) {
-      setDropdownOpen(!dropdownOpen);
-    } else {
-      navigate('/');
-    }
-  };
-
-  const toggleMobileMenu = () => {
-    setMobileMenuOpen(!mobileMenuOpen);
+  // Dummy login handler
+  const handleLogin = (e) => {
+    e.preventDefault();
+    alert('🔐 Membership login coming soon! For now, just enjoy the free content.');
+    setLoginModalOpen(false);
   };
 
   return (
     <nav style={styles.nav}>
-      {/* DESKTOP LOGO & DROPDOWN */}
-      <div 
-        onClick={handleLogoClick} 
-        style={styles.logo}
-        onMouseEnter={() => isHome && setDropdownOpen(true)}
-        onMouseLeave={() => isHome && setDropdownOpen(false)}
-      >
-        Higher Spiritual Paths
-        {isHome && dropdownOpen && (
-          <div style={styles.dropdown}>
-            <Link to="/about" style={styles.dropdownItem}>About</Link>
-            <Link to="/practices" style={styles.dropdownItem}>Practices</Link>
-            <Link to="/founders" style={styles.dropdownItem}>Founders</Link>
-            <Link to="/shop" style={styles.dropdownItem}>Shop</Link>
-            <Link to="/blog" style={styles.dropdownItem}>📖 Blog</Link>
-            <Link to="/podcast" style={styles.dropdownItem}>🎙️ Podcast</Link>
-            <Link to="/daily-wisdom" style={styles.dropdownItem}>🕯️ Wisdom</Link>
-            <Link to="/tarot" style={styles.dropdownItem}>🔮 Tarot</Link>
-            <Link to="/guardian-angel" style={styles.dropdownItem}>👼 Guardian</Link>
-            <Link to="/angel-numbers" style={styles.dropdownItem}>✨ Numbers</Link>
-            <Link to="/cart" style={styles.dropdownItem}>🛒 Cart ({cartCount})</Link>
-          </div>
-        )}
+      {/* --- LOGO --- */}
+      <Link to="/" style={styles.logo}>
+        <span style={styles.logoIcon}>✦</span> Higher Spiritual Paths
+      </Link>
+
+      {/* --- RIGHT SIDE ICONS (Login + Hamburger) --- */}
+      <div style={styles.rightIcons}>
+        <button onClick={toggleLoginModal} style={styles.iconBtn}>
+          🔑
+        </button>
+        <button onClick={toggleMobileMenu} style={styles.hamburger}>
+          {mobileMenuOpen ? '✕' : '☰'}
+        </button>
       </div>
 
-      {/* MOBILE HAMBURGER ICON */}
-      <div style={styles.hamburger} onClick={toggleMobileMenu}>
-        {mobileMenuOpen ? '✕' : '☰'}
-      </div>
-
-      {/* DESKTOP LINKS */}
-      <div style={styles.desktopLinks}>
-        <Link to="/" style={styles.link}>Home</Link>
-        <Link to="/about" style={styles.link}>About</Link>
-        <Link to="/practices" style={styles.link}>Practices</Link>
-        <Link to="/founders" style={styles.link}>Founders</Link>
-        <Link to="/shop" style={styles.link}>Shop</Link>
-        <Link to="/blog" style={styles.link}>📖 Blog</Link>
-        <Link to="/podcast" style={styles.link}>🎙️ Podcast</Link>
-        <Link to="/daily-wisdom" style={styles.link}>🕯️ Wisdom</Link>
-        <Link to="/tarot" style={styles.link}>🔮 Tarot</Link>
-        <Link to="/guardian-angel" style={styles.link}>👼 Guardian</Link>
-        <Link to="/angel-numbers" style={styles.link}>✨ Numbers</Link>
-        <Link to="/cart" style={styles.link}>
-          🛒 {cartCount > 0 && <span style={styles.badge}>{cartCount}</span>}
-        </Link>
-      </div>
-
-      {/* MOBILE LINKS (Hidden by default, shows when hamburger is clicked) */}
+      {/* --- MOBILE DROPDOWN MENU --- */}
       {mobileMenuOpen && (
         <div style={styles.mobileLinks}>
           <Link to="/" style={styles.mobileLink} onClick={() => setMobileMenuOpen(false)}>Home</Link>
@@ -88,6 +51,22 @@ function Navbar({ cartCount }) {
           <Link to="/cart" style={styles.mobileLink} onClick={() => setMobileMenuOpen(false)}>🛒 Cart ({cartCount})</Link>
         </div>
       )}
+
+      {/* --- LOGIN MODAL --- */}
+      {loginModalOpen && (
+        <div style={styles.modalOverlay} onClick={toggleLoginModal}>
+          <div style={styles.modalContent} onClick={(e) => e.stopPropagation()}>
+            <button style={styles.closeBtn} onClick={toggleLoginModal}>✕</button>
+            <h2 style={styles.modalTitle}>🔐 Member Login</h2>
+            <form onSubmit={handleLogin} style={styles.form}>
+              <input type="email" placeholder="Email" style={styles.input} required />
+              <input type="password" placeholder="Password" style={styles.input} required />
+              <button type="submit" style={styles.submitBtn}>Log In</button>
+            </form>
+            <p style={styles.demoNote}>Demo: Use any email/password</p>
+          </div>
+        </div>
+      )}
     </nav>
   );
 }
@@ -97,7 +76,7 @@ const styles = {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: '1rem 1rem 1rem 1rem',
+    padding: '1rem 2rem',
     background: '#5B2A8C',
     color: '#ffffff',
     fontFamily: 'Montserrat, sans-serif',
@@ -109,72 +88,35 @@ const styles = {
     fontSize: '1.4rem',
     fontWeight: '700',
     letterSpacing: '1px',
-    cursor: 'pointer',
-    position: 'relative',
-    padding: '0.5rem 0',
+    color: '#ffffff',
+    textDecoration: 'none',
     display: 'flex',
     alignItems: 'center',
     gap: '10px'
   },
   logoIcon: {
-    color: '#fff',
+    color: '#D4AF37',
     fontSize: '1.8rem'
   },
-  dropdown: {
-    position: 'absolute',
-    top: '100%',
-    left: '0',
-    background: '#ffffff',
-    padding: '1rem',
-    borderRadius: '12px',
-    boxShadow: '0 10px 40px rgba(0,0,0,0.15)',
-    minWidth: '200px',
+  rightIcons: {
     display: 'flex',
-    flexDirection: 'column',
-    gap: '0.5rem',
-    marginTop: '0.5rem',
-    border: '1px solid rgba(91, 42, 140, 0.1)',
-    animation: 'fadeIn 0.3s ease'
-  },
-  dropdownItem: {
-    color: '#1a1a1a',
-    textDecoration: 'none',
-    padding: '0.5rem 1rem',
-    borderRadius: '8px',
-    transition: 'background 0.2s',
-    fontWeight: '500'
-  },
-  // Mobile Hamburger Styling
-  hamburger: {
-    display: 'none',
-    fontSize: '2rem',
-    cursor: 'pointer',
-    color: '#fff'
-  },
-  // Desktop Links (Hidden on Mobile)
-  desktopLinks: {
-    display: 'flex',
-    gap: '1.5rem',
     alignItems: 'center',
-    flexWrap: 'wrap',
-    justifyContent: 'flex-end'
+    gap: '1rem'
   },
-  link: {
-    color: '#ffffff',
-    textDecoration: 'none',
-    fontSize: '0.95rem',
-    fontWeight: '500'
+  iconBtn: {
+    background: 'none',
+    border: 'none',
+    color: '#fff',
+    fontSize: '1.5rem',
+    cursor: 'pointer'
   },
-  badge: {
-    background: '#D4AF37',
-    color: '#5B2A8C',
-    borderRadius: '50%',
-    padding: '0.2rem 0.6rem',
-    fontSize: '0.8rem',
-    fontWeight: 'bold',
-    marginLeft: '0.3rem'
+  hamburger: {
+    background: 'none',
+    border: 'none',
+    color: '#fff',
+    fontSize: '2rem',
+    cursor: 'pointer'
   },
-  // Mobile Links (Shown when menu opens)
   mobileLinks: {
     position: 'absolute',
     top: '100%',
@@ -194,6 +136,66 @@ const styles = {
     fontSize: '1.1rem',
     padding: '0.5rem 0',
     borderBottom: '1px solid rgba(255,255,255,0.1)'
+  },
+  modalOverlay: {
+    position: 'fixed',
+    top: 0, left: 0, right: 0, bottom: 0,
+    backgroundColor: 'rgba(0,0,0,0.6)',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 9999
+  },
+  modalContent: {
+    background: '#fff',
+    padding: '2rem',
+    borderRadius: '20px',
+    maxWidth: '400px',
+    width: '90%',
+    position: 'relative',
+    boxShadow: '0 20px 60px rgba(0,0,0,0.3)'
+  },
+  closeBtn: {
+    position: 'absolute',
+    top: '10px',
+    right: '15px',
+    fontSize: '1.5rem',
+    cursor: 'pointer',
+    color: '#999',
+    background: 'none',
+    border: 'none'
+  },
+  modalTitle: {
+    color: '#5B2A8C',
+    textAlign: 'center',
+    marginBottom: '1rem'
+  },
+  form: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '1rem'
+  },
+  input: {
+    padding: '0.8rem',
+    borderRadius: '8px',
+    border: '1px solid #ddd',
+    fontSize: '1rem'
+  },
+  submitBtn: {
+    padding: '0.8rem',
+    background: '#5B2A8C',
+    color: '#fff',
+    border: 'none',
+    borderRadius: '8px',
+    fontSize: '1rem',
+    fontWeight: 'bold',
+    cursor: 'pointer'
+  },
+  demoNote: {
+    textAlign: 'center',
+    fontSize: '0.8rem',
+    color: '#888',
+    marginTop: '0.5rem'
   }
 };
 
@@ -203,10 +205,6 @@ styleTag.innerHTML = `
   @keyframes fadeIn {
     from { opacity: 0; transform: translateY(-10px); }
     to { opacity: 1; transform: translateY(0); }
-  }
-  @media (max-width: 768px) {
-    .hamburger { display: block !important; }
-    .desktopLinks { display: none !important; }
   }
 `;
 document.head.appendChild(styleTag);
