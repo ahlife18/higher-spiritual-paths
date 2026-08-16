@@ -1,84 +1,34 @@
 import { useState } from 'react';
+import emailjs from '@emailjs/browser';
 
 function GuardianAngel() {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({ name: '', gender: '', birthMonth: '', birthDay: '', birthYear: '', email: '' });
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [validationError, setValidationError] = useState('');
 
-  // --- EXPANDED ANGEL DATABASE (700+ WORDS EACH) ---
+  // --- ANGEL DATABASE ---
   const angels = [
     {
       name: 'Haniel',
       gender: 'female',
-      message: `Dearest seeker, the angel Haniel has been walking beside you since the day you were born. 
-      
-Haniel is the angel of grace, divine beauty, and the sacred flow of intuition. Her name means "Grace of God," and she is here to remind you that you are not just a physical being having a spiritual experience—you are a radiant soul clothed in human form, carrying a unique light that the universe specifically designed you to share.
-
-You may have felt unseen or undervalued at times. You may have questioned your beauty, your worth, or the purpose of your struggles. Haniel wants you to know that every single experience you have lived has been sculpting you into the masterpiece you are today. She is calling you to soften. To let go of the harsh ways you speak to yourself. To look in the mirror and see the divine rather than the flaws.
-
-Haniel asks you to trust your intuition. The gut feelings you have been ignoring? The dreams that linger in your mind? The sudden inner knowing that something is shifting? That is Haniel whispering to you. She speaks in the language of feelings, not words. When you feel a wave of peace, when you feel drawn to a new path, when you feel a sudden surge of love for yourself, that is her saying: "Yes, you are on the right path."
-
-She is also the angel of harmony in relationships. She asks you to evaluate the connections in your life. Are they filled with grace, or are they draining your light? Haniel does not ask you to abruptly cut ties, but she asks you to set sacred boundaries. Surround yourself with those who see your light, not those who dim it.
-
-In the coming weeks, Haniel will be guiding you toward a period of profound self-acceptance. You are being asked to stop waiting for external validation and to start celebrating your own existence. You are worthy of love, exactly as you are. You are worthy of peace, exactly where you are. The grace of Haniel is not something you have to earn—it is something you have to receive.
-
-Trust the journey. Trust the timing of your life. And most importantly, trust that you are held in the arms of an angel who sees you, loves you, and is guiding you toward a life of deep, radiant beauty.`
+      message: `Haniel is the angel of grace and divine beauty. She reminds you that the universe views you with unconditional love. You are here to bring harmony and elegance into the world. She has been guiding you toward self-acceptance and deeper relationships.`
     },
     {
       name: 'Raphael',
       gender: 'male',
-      message: `Dearest seeker, the angel Raphael has been called to you at this very moment. 
-      
-Raphael is the archangel of healing, divine light, and the restoration of body, mind, and spirit. His name means "God Heals," and he is present in your life right now because you are ready to heal. Whether your wounds are physical, emotional, or spiritual, Raphael is here to guide you through the process of mending.
-
-You may have been carrying a burden that feels too heavy to bear. You may have been replaying old pains, holding on to grief, or feeling betrayed by your own body or mind. Raphael sees the weary weight you have been carrying, and he gently says: "Put it down. You do not have to hold this alone."
-
-Raphael is the angel of divine medicine. He does not simply take away the pain—he illuminates the path to recovery. He asks you to look at your lifestyle, your eating habits, your sleep patterns, and the people you surround yourself with. He is asking you to become an active participant in your own healing. What you eat, what you consume, and what you listen to either heals you or holds you back.
-
-Emotionally, Raphael is guiding you to release the past. Holding on to old resentments is like drinking poison and expecting the other person to die. Raphael asks you to forgive—not because the other person deserves it, but because YOU deserve peace. Forgiveness is not about the past; it is about untying the knot that binds you to your pain so you can walk into the future with your full energy restored.
-
-Spiritually, Raphael is asking you to reconnect with your body. Your body is the temple of your soul. If you have been neglecting your physical health, neglecting your rest, or ignoring the whispers of your body, Raphael is here to remind you that spiritual health and physical health are not separate. They are deeply intertwined.
-
-A powerful shift is entering your life. You are entering a phase of restoration. Your energy will return. Your emotional clarity will return. Your inner joy will return. Trust that Raphael is working behind the scenes, guiding doctors, healers, and even the Earth itself to bring you what you need to heal.
-
-Healing is not a destination—it is a journey. And you are not walking this journey alone.`
+      message: `Raphael is the divine healer. His presence is a sign that you are being healed on a physical, emotional, or spiritual level. You are being guided to seek balance and to trust that your body and soul are mending. He brings immense light and restoration.`
     },
     {
       name: 'Gabriel',
       gender: 'male',
-      message: `Dearest seeker, the angel Gabriel has been watching over you with a message of hope and clarity. 
-      
-Gabriel is the archangel of communication, divine revelation, and the courage to speak your truth. His name means "Strength of God," and he is the messenger who brings clarity to your life. You may have been feeling uncertain about a decision, confused about your path, or hesitant to speak up about something important. Gabriel is here to help you cut through the noise.
-
-Gabriel represents the power of the voice. This is not just about speaking—it is about being heard. It is about having the courage to express your boundaries, your desires, and your dreams without the fear of judgment. Gabriel asks you to write down what is on your heart. Journaling, speaking aloud, or even just speaking kindly to yourself—these are the tools Gabriel offers you to find clarity.
-
-Gabriel is also the angel who announces new beginnings. When a new idea, a new relationship, or a new chapter suddenly appears in your life, that is Gabriel delivering a message from the universe. You are being called to welcome these new beginnings with open arms. Do not overthink them. Do not delay. Trust that if it arrived in your life, it arrived because you are ready for it.
-
-This card also carries a message about your truth. Have you been hiding who you really are? Have you been downplaying your gifts? Gabriel is urging you to step out of the shadows and let your authenticity shine. The world does not need you to be someone else. It needs you to be exactly who you are.
-
-If you have been considering starting a new project, having a difficult conversation, or finally expressing a truth you have held in your heart, Gabriel is standing beside you, saying: "Speak now. The universe will meet you in the middle. The words you speak will bring the miracles you have been waiting for."
-
-Trust your words. Trust your voice. And trust that Gabriel is guiding you toward a life where you are fully heard and fully seen.`
+      message: `Gabriel is the messenger of hope and clarity. He is here to help you communicate your truth and to embrace your spiritual path. As an archangel, he brings powerful news of transformation. Trust the messages you are receiving.`
     },
     {
       name: 'Ariel',
       gender: 'female',
-      message: `Dearest seeker, the angel Ariel is calling you to reconnect with the earth and your own inner strength. 
-      
-Ariel is the archangel of the natural world, protection, and raw, untamed courage. Her name means "Lioness of God," and she represents the fierce, protective energy that lives deep within your soul. She is here to remind you that you are not weak. You are not powerless. You are a force of nature, capable of surviving, thriving, and protecting what you love.
-
-Ariel is deeply connected to the earth. She asks you to spend more time in nature—to feel the grass beneath your feet, to listen to the wind, to watch the trees breathe. Reconnecting with the earth is reconnecting with yourself. Nature does not rush. It does not force. It simply grows, adapts, and thrives in harmony. Ariel wants you to adopt this same energy in your own life.
-
-You may be feeling vulnerable, unprotected, or uncertain of your own strength. Ariel is here to reassure you that you are far stronger than you realize. She is the guardian of the planet, and she stands guard over you as well. Her energy is fierce, protective, and unwavering.
-
-If you have been feeling targeted by negativity, facing challenges at work, or dealing with difficult people, Ariel is strengthening your shield. She wants you to defend your boundaries with the ferocity of a lioness. Stand your ground. Claim your space. You are allowed to say no. You are allowed to protect your energy. You are allowed to walk away from anything that does not serve your highest good.
-
-Ariel is also deeply connected to animals and the unseen realms of nature. Pay attention to the animals that cross your path—they may be carrying messages from her. A bird outside your window, a stray cat, a butterfly landing near you—these are signs that the universe is surrounding you with guidance and protection.
-
-On a soul level, Ariel is asking you to trust your power. You are not at the mercy of your circumstances. You are the creator of them. The courage you are seeking is already inside you. The protection you are seeking has already been assigned to you.
-
-Walk with confidence, dear one. Walk with the sure-footed strength of a lion. The earth supports you. The angels protect you. And the universe is conspiring in your favor.`
+      message: `Ariel is the lioness of God, protecting the earth and all living creatures. She is calling you to reconnect with nature and to protect your own boundaries. She brings strength and courage to those who feel lost or vulnerable.`
     }
   ];
 
@@ -87,21 +37,101 @@ Walk with confidence, dear one. Walk with the sure-footed strength of a lion. Th
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+    setValidationError('');
   };
 
   const handleNext = () => {
+    setValidationError('');
+
+    if (step === 1 && !formData.name.trim()) {
+      setValidationError('Please enter your name to continue.');
+      return;
+    }
+    if (step === 2 && !formData.gender) {
+      setValidationError('Please select your gender to continue.');
+      return;
+    }
+    if (step === 3 && (!formData.birthMonth || !formData.birthDay || !formData.birthYear)) {
+      setValidationError('Please select your full birth date to continue.');
+      return;
+    }
+    if (step === 4 && !formData.email.trim()) {
+      setValidationError('Please enter your email to receive your reading.');
+      return;
+    }
+
     if (step < 4) setStep(step + 1);
     else handleSubmit();
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     setLoading(true);
-    setTimeout(() => {
-      const angel = getRandomAngel();
-      setResult(angel);
+
+    // 1. Choose the Angel
+    const angel = getRandomAngel();
+    setResult(angel);
+
+    // 2. Send the Email via EmailJS (No Template Required)
+    try {
+      const serviceID = 'service_bksgbfs';     // ✅ Your Service ID
+      const publicKey = '868cFAcGA6sQXfBjN';   // ✅ Your Public Key
+
+      // We construct the email message directly in the code
+      const emailMessage = `
+        <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto; background: #f9f9f9; padding: 30px; border-radius: 20px; border: 1px solid #e0e0e0;">
+          <div style="text-align: center; margin-bottom: 20px;">
+            <h1 style="color: #5B2A8C;">🕯️ Higher Spiritual Paths</h1>
+            <h2 style="color: #5B2A8C;">Your Guardian Angel Reading</h2>
+          </div>
+          
+          <div style="background: white; padding: 25px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+            <p style="font-size: 18px; font-weight: bold; color: #5B2A8C;">Dearest ${formData.name},</p>
+            
+            <p style="font-size: 16px; line-height: 1.6;">
+              The day you were born, a very special Angel was assigned to watch over you.
+            </p>
+            
+            <div style="background: #F5EEF8; padding: 20px; border-radius: 12px; margin: 20px 0; text-align: center;">
+              <h3 style="color: #5B2A8C; margin: 0;">Your Guardian Archangel is</h3>
+              <h2 style="color: #5B2A8C; font-size: 32px; margin: 5px 0;">${angel.name}</h2>
+            </div>
+            
+            <p style="font-size: 16px; line-height: 1.8; color: #444;">
+              <strong>Message from ${angel.name}:</strong><br />
+              ${angel.message}
+            </p>
+            
+            <p style="font-size: 16px; line-height: 1.6; margin-top: 20px; color: #666; font-style: italic;">
+              May this message guide you on your path.
+            </p>
+          </div>
+          
+          <div style="text-align: center; margin-top: 20px; color: #888; font-size: 14px;">
+            <p>No Religion. All Religion. The truth is in plain sight.</p>
+            <p>🕯️ Higher Spiritual Paths</p>
+          </div>
+        </div>
+      `;
+
+      // Send the email using the direct method
+      await emailjs.send(
+        serviceID, 
+        'template_xxxxxx', // Placeholder: This is ignored when using direct custom email
+        {
+          to_email: formData.email,
+          subject: 'Your Guardian Angel Reading from Higher Spiritual Paths',
+          message_html: emailMessage
+        }, 
+        publicKey
+      );
+      
       setLoading(false);
       setStep(5);
-    }, 2000);
+    } catch (error) {
+      console.error('Email sending failed:', error);
+      setValidationError('Failed to send email. Please check your email address and try again.');
+      setLoading(false);
+    }
   };
 
   const progressWidth = ((step - 1) / 4) * 100;
@@ -110,7 +140,7 @@ Walk with confidence, dear one. Walk with the sure-footed strength of a lion. Th
   const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   const days = Array.from({ length: 31 }, (_, i) => i + 1);
   const currentYear = new Date().getFullYear();
-  const years = Array.from({ length: 126 }, (_, i) => currentYear - 125 + i); // 1900 to current + 10 years
+  const years = Array.from({ length: 126 }, (_, i) => currentYear - 125 + i);
 
   return (
     <div style={styles.container}>
@@ -122,16 +152,15 @@ Walk with confidence, dear one. Walk with the sure-footed strength of a lion. Th
       <div style={styles.card}>
         {step < 5 && <div style={styles.progressBar}><div style={{ ...styles.progressFill, width: `${progressWidth}%` }} /></div>}
 
-        {/* STEP 1: NAME */}
         {step === 1 && (
           <div>
             <h2 style={styles.stepTitle}>Step 1: What's Your Name?</h2>
-            <input type="text" name="name" placeholder="Enter Your First Name" value={formData.name} onChange={handleInputChange} style={styles.input} required />
+            <input type="text" name="name" placeholder="Enter Your First Name" value={formData.name} onChange={handleInputChange} style={{ ...styles.input, borderColor: validationError ? '#e74c3c' : '#ddd' }} required />
+            {validationError && <p style={styles.errorText}>{validationError}</p>}
             <button onClick={handleNext} style={styles.btn}>Continue →</button>
           </div>
         )}
 
-        {/* STEP 2: GENDER */}
         {step === 2 && (
           <div>
             <h2 style={styles.stepTitle}>Step 2: Are You Female Or Male?</h2>
@@ -139,41 +168,41 @@ Walk with confidence, dear one. Walk with the sure-footed strength of a lion. Th
               <button onClick={() => { setFormData({ ...formData, gender: 'male' }); handleNext(); }} style={{ ...styles.genderBtn, background: formData.gender === 'male' ? '#5B2A8C' : '#ccc' }}>Male</button>
               <button onClick={() => { setFormData({ ...formData, gender: 'female' }); handleNext(); }} style={{ ...styles.genderBtn, background: formData.gender === 'female' ? '#5B2A8C' : '#ccc' }}>Female</button>
             </div>
+            {validationError && <p style={styles.errorText}>{validationError}</p>}
           </div>
         )}
 
-        {/* STEP 3: BIRTH DATE (FULL RANGES) */}
         {step === 3 && (
           <div>
             <h2 style={styles.stepTitle}>Step 3: When Were You Born?</h2>
             <div style={styles.dateGroup}>
-              <select name="birthMonth" onChange={handleInputChange} style={styles.select} required>
+              <select name="birthMonth" onChange={handleInputChange} style={{ ...styles.select, borderColor: validationError ? '#e74c3c' : '#ddd' }} required>
                 <option value="">Month</option>
                 {months.map((m, i) => <option key={i} value={i + 1}>{m}</option>)}
               </select>
-              <select name="birthDay" onChange={handleInputChange} style={styles.select} required>
+              <select name="birthDay" onChange={handleInputChange} style={{ ...styles.select, borderColor: validationError ? '#e74c3c' : '#ddd' }} required>
                 <option value="">Day</option>
                 {days.map(d => <option key={d} value={d}>{d}</option>)}
               </select>
-              <select name="birthYear" onChange={handleInputChange} style={styles.select} required>
+              <select name="birthYear" onChange={handleInputChange} style={{ ...styles.select, borderColor: validationError ? '#e74c3c' : '#ddd' }} required>
                 <option value="">Year</option>
                 {years.map(y => <option key={y} value={y}>{y}</option>)}
               </select>
             </div>
+            {validationError && <p style={styles.errorText}>{validationError}</p>}
             <button onClick={handleNext} style={styles.btn}>Continue →</button>
           </div>
         )}
 
-        {/* STEP 4: EMAIL */}
         {step === 4 && (
           <div>
             <h2 style={styles.stepTitle}>Step 4: Where Should Your Free Reading Be Sent To?</h2>
-            <input type="email" name="email" placeholder="Enter Your Email" value={formData.email} onChange={handleInputChange} style={styles.input} required />
+            <input type="email" name="email" placeholder="Enter Your Email" value={formData.email} onChange={handleInputChange} style={{ ...styles.input, borderColor: validationError ? '#e74c3c' : '#ddd' }} required />
+            {validationError && <p style={styles.errorText}>{validationError}</p>}
             <button onClick={handleNext} style={styles.btn}>Yes, Show My Result! →</button>
           </div>
         )}
 
-        {/* STEP 5: RESULT / LOADING */}
         {step === 5 && (
           <div style={styles.resultContainer}>
             {loading ? (
@@ -186,10 +215,9 @@ Walk with confidence, dear one. Walk with the sure-footed strength of a lion. Th
                 <h3 style={styles.resultTitle}>Dearest {formData.name},</h3>
                 <p style={styles.resultSubtitle}>Your Guardian Archangel is <strong>{result.name}</strong></p>
                 <div style={styles.angelMessage}>
-                  {result.message.split('\n').map((paragraph, i) => (
-                    <p key={i} style={styles.messageParagraph}>{paragraph}</p>
-                  ))}
+                  <p style={styles.messageParagraph}>{result.message}</p>
                 </div>
+                <p style={styles.emailSentMessage}>✅ Your reading has been sent to <strong>{formData.email}</strong>. Please check your inbox!</p>
                 <button onClick={() => window.location.reload()} style={styles.btn}>Start Over</button>
               </div>
             ) : null}
@@ -209,17 +237,19 @@ const styles = {
   progressBar: { height: '10px', background: '#eee', borderRadius: '10px', marginBottom: '2rem', overflow: 'hidden' },
   progressFill: { height: '100%', background: '#5B2A8C', transition: 'width 0.5s' },
   stepTitle: { fontSize: '1.8rem', color: '#1a1a1a', marginBottom: '2rem' },
-  input: { width: '100%', padding: '15px', borderRadius: '10px', border: '1px solid #ddd', fontSize: '1rem', marginBottom: '2rem' },
+  input: { width: '100%', padding: '15px', borderRadius: '10px', border: '1px solid #ddd', fontSize: '1rem', marginBottom: '1rem' },
+  errorText: { color: '#e74c3c', fontSize: '0.9rem', marginBottom: '1rem', fontWeight: 'bold' },
   btn: { width: '100%', padding: '15px', background: '#5B2A8C', color: '#fff', border: 'none', borderRadius: '30px', fontSize: '1.1rem', cursor: 'pointer' },
-  genderGroup: { display: 'flex', justifyContent: 'center', gap: '1rem', marginBottom: '2rem' },
+  genderGroup: { display: 'flex', justifyContent: 'center', gap: '1rem', marginBottom: '1rem' },
   genderBtn: { padding: '15px 30px', border: 'none', borderRadius: '10px', color: '#fff', fontSize: '1rem', cursor: 'pointer' },
-  dateGroup: { display: 'flex', gap: '1rem', justifyContent: 'center', marginBottom: '2rem' },
+  dateGroup: { display: 'flex', gap: '1rem', justifyContent: 'center', marginBottom: '1rem' },
   select: { padding: '10px', borderRadius: '10px', border: '1px solid #ddd', fontSize: '1rem', flex: 1, minWidth: '60px' },
   resultContainer: { padding: '1rem' },
   resultTitle: { fontSize: '1.8rem', color: '#5B2A8C', marginBottom: '0.5rem' },
   resultSubtitle: { fontSize: '1.2rem', marginBottom: '2rem' },
   angelMessage: { textAlign: 'left', marginBottom: '2rem' },
-  messageParagraph: { fontSize: '1.05rem', lineHeight: '1.8', color: '#444', marginBottom: '1rem' },
+  messageParagraph: { fontSize: '1.05rem', lineHeight: '1.8', color: '#444' },
+  emailSentMessage: { fontSize: '1rem', color: '#27ae60', marginBottom: '2rem', fontWeight: 'bold' },
   loader: { width: '60px', height: '60px', borderRadius: '50%', border: '8px solid #eee', borderTop: '8px solid #5B2A8C', animation: 'spin 1s linear infinite', margin: '0 auto 1rem' }
 };
 
