@@ -11,7 +11,7 @@ function Navbar({ cartCount }) {
   // Dummy login handler
   const handleLogin = (e) => {
     e.preventDefault();
-    alert('🔐 Membership login coming soon! For now, just enjoy the free content.');
+    alert('🔐 Membership portal coming soon!');
     setLoginModalOpen(false);
   };
 
@@ -22,10 +22,10 @@ function Navbar({ cartCount }) {
         <span style={styles.logoIcon}>✦</span> Higher Spiritual Paths
       </Link>
 
-      {/* --- RIGHT SIDE ICONS (Login + Hamburger) --- */}
+      {/* --- RIGHT SIDE ICONS (Membership + Hamburger) --- */}
       <div style={styles.rightIcons}>
-        <button onClick={toggleLoginModal} style={styles.iconBtn}>
-          🔑
+        <button onClick={toggleLoginModal} style={styles.membershipBtn}>
+          Membership
         </button>
         <button onClick={toggleMobileMenu} style={styles.hamburger}>
           {mobileMenuOpen ? '✕' : '☰'}
@@ -43,25 +43,24 @@ function Navbar({ cartCount }) {
           <Link to="/blog" style={styles.mobileLink} onClick={() => setMobileMenuOpen(false)}>📖 Blog</Link>
           <Link to="/podcast" style={styles.mobileLink} onClick={() => setMobileMenuOpen(false)}>🎙️ Podcast</Link>
           <Link to="/daily-wisdom" style={styles.mobileLink} onClick={() => setMobileMenuOpen(false)}>🕯️ Wisdom</Link>
-          <Link to="/tarot" style={styles.mobileLink} onClick={() => setMobileMenuOpen(false)}>🔮 Tarot</Link>
-          <Link to="/guardian-angel" style={styles.mobileLink} onClick={() => setMobileMenuOpen(false)}>👼 Guardian</Link>
+          <Link to="/tarot-cards" style={styles.mobileLink} onClick={() => setMobileMenuOpen(false)}>🔮 Tarot Cards</Link>
+          <Link to="/guardian-angel" style={styles.mobileLink} onClick={() => setMobileMenuOpen(false)}>👼 Guardian Angel</Link>
           <Link to="/angel-numbers" style={styles.mobileLink} onClick={() => setMobileMenuOpen(false)}>✨ Numbers</Link>
           <Link to="/cart" style={styles.mobileLink} onClick={() => setMobileMenuOpen(false)}>🛒 Cart ({cartCount})</Link>
         </div>
       )}
 
-      {/* --- LOGIN MODAL --- */}
+      {/* --- MEMBERSHIP LOGIN MODAL --- */}
       {loginModalOpen && (
         <div style={styles.modalOverlay} onClick={toggleLoginModal}>
           <div style={styles.modalContent} onClick={(e) => e.stopPropagation()}>
             <button style={styles.closeBtn} onClick={toggleLoginModal}>✕</button>
-            <h2 style={styles.modalTitle}>🔐 Member Login</h2>
+            <h2 style={styles.modalTitle}>Membership Login</h2>
             <form onSubmit={handleLogin} style={styles.form}>
               <input type="email" placeholder="Email" style={styles.input} required />
               <input type="password" placeholder="Password" style={styles.input} required />
               <button type="submit" style={styles.submitBtn}>Log In</button>
             </form>
-            <p style={styles.demoNote}>Demo: Use any email/password</p>
           </div>
         </div>
       )}
@@ -101,12 +100,16 @@ const styles = {
     alignItems: 'center',
     gap: '1rem'
   },
-  iconBtn: {
-    background: 'none',
-    border: 'none',
-    color: '#fff',
-    fontSize: '1.5rem',
-    cursor: 'pointer'
+  membershipBtn: {
+    background: 'rgba(255,255,255,0.15)',
+    border: '1px solid rgba(255,255,255,0.3)',
+    color: '#ffffff',
+    padding: '0.4rem 1.2rem',
+    borderRadius: '30px',
+    fontSize: '0.9rem',
+    fontWeight: 'bold',
+    cursor: 'pointer',
+    transition: 'all 0.3s'
   },
   hamburger: {
     background: 'none',
@@ -188,12 +191,6 @@ const styles = {
     fontSize: '1rem',
     fontWeight: 'bold',
     cursor: 'pointer'
-  },
-  demoNote: {
-    textAlign: 'center',
-    fontSize: '0.8rem',
-    color: '#888',
-    marginTop: '0.5rem'
   }
 };
 
