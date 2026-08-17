@@ -1,14 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
-function Tarot() {
-  const [selectedCard, setSelectedCard] = useState(null);
-  const [isReadingOpen, setIsReadingOpen] = useState(false);
-  const [pickedCardIds, setPickedCardIds] = useState([]);
-  const [frontCardId, setFrontCardId] = useState(0);
-  const [isShuffling, setIsShuffling] = useState(true);
-
-  // ==========================================
+// ==========================================
   // COMPLETE 78-CARD TAROT DATABASE
   // ==========================================
   const tarotDeck = [
@@ -647,6 +640,13 @@ function Tarot() {
     }
   ];
 
+function Tarot() {
+  const [selectedCard, setSelectedCard] = useState(null);
+  const [isReadingOpen, setIsReadingOpen] = useState(false);
+  const [pickedCardIds, setPickedCardIds] = useState([]);
+  const [frontCardId, setFrontCardId] = useState(0);
+  const [isShuffling, setIsShuffling] = useState(true);
+
   // ==========================================
   // SHUFFLE + CUT DECK LOGIC
   // ==========================================
@@ -659,7 +659,7 @@ function Tarot() {
     }, 1500);
 
     return () => clearTimeout(shuffleTimer);
-  }, []);
+  }, []); // ✅ Dependency array is now empty because tarotDeck is outside
 
   const handleCutDeck = () => {
     const drawnCard = tarotDeck[frontCardId];
