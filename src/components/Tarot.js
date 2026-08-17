@@ -1,42 +1,12 @@
 import { useState, useEffect } from 'react';
-
-// Inject CSS keyframes directly into the document head
-const styleTag = document.createElement('style');
-styleTag.innerHTML = `
-  @keyframes floatGlow {
-    0% { transform: translateY(0px) scale(1); opacity: 0.8; }
-    50% { transform: translateY(-10px) scale(1.02); opacity: 1; }
-    100% { transform: translateY(0px) scale(1); opacity: 0.8; }
-  }
-  @keyframes shuffleReal {
-    0% { transform: rotate(0deg) translateX(0); }
-    10% { transform: rotate(-10deg) translateX(-40px); }
-    30% { transform: rotate(15deg) translateX(40px); }
-    50% { transform: rotate(-15deg) translateX(-30px); }
-    70% { transform: rotate(10deg) translateX(30px); }
-    90% { transform: rotate(-5deg) translateX(-10px); }
-    100% { transform: rotate(0deg) translateX(0); }
-  }
-  @keyframes revealCard {
-    0% { transform: scale(0) rotateY(90deg) translateX(50px); opacity: 0; }
-    60% { transform: scale(1.1) rotateY(-10deg) translateX(0); opacity: 1; }
-    100% { transform: scale(1) rotateY(0deg) translateX(0); opacity: 1; }
-  }
-  @keyframes sparkle {
-    0% { opacity: 0.2; transform: scale(0.8); }
-    50% { opacity: 1; transform: scale(1.2); }
-    100% { opacity: 0.2; transform: scale(0.8); }
-  }
-`;
-document.head.appendChild(styleTag);
+import { motion } from 'framer-motion';
 
 function Tarot() {
   const [selectedCard, setSelectedCard] = useState(null);
   const [isReadingOpen, setIsReadingOpen] = useState(false);
   const [pickedCardIds, setPickedCardIds] = useState([]);
-  
-  const [phase, setPhase] = useState('shuffling'); // 'shuffling' -> 'offering' -> 'revealed'
-  const [revealedCard, setRevealedCard] = useState(null);
+  const [frontCardId, setFrontCardId] = useState(0);
+  const [isShuffling, setIsShuffling] = useState(true);
 
   // ==========================================
   // COMPLETE 78-CARD TAROT DATABASE
@@ -678,106 +648,84 @@ function Tarot() {
   ];
 
   // ==========================================
-  // AUTO-PLAY SHUFFLE AND PHASE LOGIC
+  // SHUFFLE + CUT DECK LOGIC
   // ==========================================
   useEffect(() => {
-    // Shuffle for 3 seconds
-    setTimeout(() => {
-      setPhase('offering');
-    }, 3000);
+    const randomIndex = Math.floor(Math.random() * tarotDeck.length);
+    setFrontCardId(randomIndex);
+    
+    const shuffleTimer = setTimeout(() => {
+      setIsShuffling(false);
+    }, 1500);
+
+    return () => clearTimeout(shuffleTimer);
   }, []);
 
   const handleCutDeck = () => {
-    // Pick a random unique card
-    const availableCards = tarotDeck.filter(card => !pickedCardIds.includes(card.id));
-    let randomPick;
-    if (availableCards.length === 0) {
-      setPickedCardIds([]);
-      randomPick = tarotDeck[Math.floor(Math.random() * tarotDeck.length)];
-    } else {
-      randomPick = availableCards[Math.floor(Math.random() * availableCards.length)];
-      setPickedCardIds([...pickedCardIds, randomPick.id]);
-    }
+    const drawnCard = tarotDeck[frontCardId];
+    setPickedCardIds([...pickedCardIds, drawnCard.id]);
+    setSelectedCard(drawnCard);
+    setIsReadingOpen(true);
     
-    setRevealedCard(randomPick);
-    setPhase('revealed');
-    
-    // Show the reading modal after the card slides in
-    setTimeout(() => {
-      setSelectedCard(randomPick);
-      setIsReadingOpen(true);
-    }, 1000);
+    const nextRandom = Math.floor(Math.random() * tarotDeck.length);
+    setFrontCardId(nextRandom);
   };
 
   const handleClose = () => {
     setIsReadingOpen(false);
     setSelectedCard(null);
-    setRevealedCard(null);
-    setPhase('offering'); // Reset to offering state for next draw
   };
 
+  // ==========================================
+  // RENDER THE TAROT PAGE
+  // ==========================================
   return (
     <div style={styles.pageContainer}>
       <div style={styles.angelEdgeTop}>🕊️ ✦ 🕊️</div>
 
       <h1 style={styles.title}>🔮 Divine Tarot Reading</h1>
-      <p style={styles.subtitle}>The cards are waiting. Cut the deck to reveal your message.</p>
+      <p style={styles.subtitle}>The cards are ready. Cut the deck to reveal your message.</p>
 
-      {/* --- THE FLOATING DECK --- */}
-      <div style={styles.sceneContainer}>
+      <div className="tarot-fan-container" style={styles.fanContainer}>
+        <div className="tarot-question-mark" style={styles.questionMarkWrapper}>
+          <div style={styles.questionMark}>?</div>
+          <div style={styles.glowRing}></div>
+        </div>
         
-        {/* Shuffling State */}
-        {phase === 'shuffling' && (
-          <div style={styles.shuffleTextContainer}>
-            <div style={styles.shuffleText}>♻️ Shuffling the cards...</div>
-          </div>
-        )}
-
-        {/* Offering State (Floating deck) */}
-        {phase === 'offering' && (
-          <div 
-            style={styles.offeringContainer}
-            onClick={handleCutDeck}
-          >
-            {/* Ethereal Glow behind the deck */}
-            <div style={styles.etherealGlow}></div>
-            
-            <div style={styles.fannedDeck}>
-              {tarotDeck.slice(0, 12).map((card, index) => {
-                const offset = index - 5.5;
-                return (
-                  <div 
-                    key={card.id}
-                    style={{
-                      ...styles.floatingCard,
-                      transform: `rotate(${offset * 4}deg) translateY(${Math.abs(offset) * -2}px)`,
-                      zIndex: index,
-                      animationDelay: `${index * 0.05}s`
-                    }}
-                  >
-                    <img src={card.image} alt={card.name} style={styles.cardImage} />
-                    <div style={styles.cardLabel}>{card.name}</div>
-                  </div>
-                );
-              })}
-            </div>
-            
-            <div style={styles.cutPrompt}>✧ Tap to Cut the Deck ✧</div>
-          </div>
-        )}
-
-        {/* Revealed State (Single card sliding out) */}
-        {phase === 'revealed' && revealedCard && (
-          <div style={styles.revealContainer}>
-            <div style={styles.revealCardWrapper}>
-              <img src={revealedCard.image} alt={revealedCard.name} style={styles.revealedImage} />
-              <div style={styles.cardLabel}>{revealedCard.name}</div>
-            </div>
-            <div style={styles.revealText}>Your card has been chosen.</div>
-          </div>
-        )}
-
+        {tarotDeck.slice(0, 22).map((card, index) => {
+          const offset = index - (frontCardId % 22);
+          const isFront = index === (frontCardId % 22);
+          
+          return (
+            <motion.div 
+              key={card.id} 
+              className="tarot-card"
+              style={{
+                ...styles.fanCard,
+                transform: `rotate(${offset * 4}deg) translateY(${Math.abs(offset) * -3}px)`,
+                zIndex: isFront ? 100 : index,
+                left: `calc(50% + ${offset * 20}px)`
+              }}
+              animate={isShuffling ? {
+                rotate: [offset * 4, (offset * 4) + 10, offset * 4],
+                y: [Math.abs(offset) * -3, (Math.abs(offset) * -3) - 20, Math.abs(offset) * -3]
+              } : {}}
+              transition={{ duration: 0.8, ease: "easeInOut", repeat: 1 }}
+            >
+              <img src={card.image} alt={card.name} style={styles.cardImage} />
+              {isFront && !isShuffling && <div style={styles.topCardLabel}>✦ Cut Me ✦</div>}
+            </motion.div>
+          );
+        })}
       </div>
+
+      <button 
+        onClick={handleCutDeck} 
+        disabled={isShuffling}
+        style={isShuffling ? { ...styles.cutBtn, opacity: 0.6, cursor: 'not-allowed' } : styles.cutBtn}
+      >
+        {isShuffling ? '🔄 Shuffling...' : '✂️ Cut the Deck'}
+      </button>
 
       <div style={styles.angelEdgeBottom}>🕊️ ✦ 🕊️</div>
 
@@ -844,135 +792,93 @@ const styles = {
   subtitle: {
     fontSize: '1.2rem',
     color: '#e0d4eb',
-    marginBottom: '3rem'
+    marginBottom: '2rem'
   },
-  sceneContainer: {
-    height: '420px',
+  fanContainer: {
+    position: 'relative',
     width: '100%',
-    maxWidth: '700px',
-    position: 'relative',
+    maxWidth: '900px',
+    height: '350px',
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: '1rem'
+    alignItems: 'flex-end',
+    margin: '1rem 0 3rem 0'
   },
-  shuffleTextContainer: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: '100%'
+  questionMarkWrapper: {
+    position: 'absolute',
+    bottom: '50px',
+    left: '45%',
+    transform: 'translateX(-50%)',
+    zIndex: 0
   },
-  shuffleText: {
-    fontSize: '2rem',
-    color: '#fff',
-    animation: 'sparkle 1.5s ease-in-out infinite'
+  questionMark: {
+    fontSize: '6rem',
+    color: '#D4AF37',
+    fontWeight: 'bold',
+    textShadow: '0 0 30px rgba(212, 175, 55, 0.6)'
   },
-  offeringContainer: {
-    position: 'relative',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    cursor: 'pointer',
-    width: '100%'
-  },
-  etherealGlow: {
+  glowRing: {
     position: 'absolute',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: '400px',
-    height: '400px',
-    background: 'radial-gradient(circle, rgba(91, 42, 140, 0.3) 0%, rgba(212, 175, 55, 0.1) 50%, transparent 70%)',
+    width: '120px',
+    height: '120px',
     borderRadius: '50%',
-    animation: 'floatGlow 3s ease-in-out infinite',
-    zIndex: 0,
-    pointerEvents: 'none'
+    background: 'radial-gradient(circle, rgba(212,175,55,0.2) 0%, rgba(212,175,55,0) 70%)',
+    animation: 'pulseGlow 2s ease-in-out infinite',
+    zIndex: -1
   },
-  fannedDeck: {
-    position: 'relative',
-    width: '320px',
-    height: '240px',
-    zIndex: 5,
-    marginTop: '10px'
-  },
-  floatingCard: {
+  fanCard: {
     position: 'absolute',
     bottom: '0',
-    width: '120px',
-    height: '180px',
+    width: '140px',
+    height: '200px',
+    cursor: 'pointer',
+    transition: 'all 0.3s ease',
     transformOrigin: 'bottom center',
-    boxShadow: '0 10px 25px rgba(0,0,0,0.4)',
+    boxShadow: '0 10px 20px rgba(0,0,0,0.4)',
     borderRadius: '10px',
     background: '#fff',
     overflow: 'hidden',
-    border: '2px solid #D4AF37',
-    animation: 'floatGlow 3s ease-in-out infinite',
-    transition: 'transform 0.3s ease'
+    border: '2px solid #D4AF37'
   },
   cardImage: {
     width: '100%',
     height: '100%',
     objectFit: 'cover'
   },
-  cardLabel: {
+  topCardLabel: {
     position: 'absolute',
-    bottom: '0',
-    left: '0',
-    right: '0',
-    background: 'rgba(91, 42, 140, 0.9)',
-    color: '#fff',
-    fontSize: '0.7rem',
-    padding: '4px',
-    textAlign: 'center'
-  },
-  cutPrompt: {
-    marginTop: '30px',
-    fontSize: '1.3rem',
-    color: '#fff',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    color: '#5B2A8C',
     fontWeight: 'bold',
-    textShadow: '0 2px 15px rgba(0,0,0,0.6)',
-    background: 'rgba(91, 42, 140, 0.6)',
-    padding: '12px 25px',
-    borderRadius: '30px',
-    backdropFilter: 'blur(8px)',
-    zIndex: 20,
-    animation: 'sparkle 2s ease-in-out infinite',
-    border: '1px solid rgba(212, 175, 55, 0.3)'
-  },
-  revealContainer: {
-    position: 'relative',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center'
-  },
-  revealCardWrapper: {
-    width: '170px',
-    height: '250px',
-    boxShadow: '0 15px 40px rgba(0,0,0,0.6)',
-    borderRadius: '12px',
-    background: '#fff',
-    overflow: 'hidden',
-    border: '3px solid #D4AF37',
-    animation: 'revealCard 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) forwards',
-    transformOrigin: 'center',
-    position: 'relative'
-  },
-  revealedImage: {
-    width: '100%',
-    height: '100%',
-    objectFit: 'cover'
-  },
-  revealText: {
-    marginTop: '25px',
     fontSize: '1.2rem',
+    background: 'rgba(255,255,255,0.8)',
+    padding: '5px 15px',
+    borderRadius: '20px',
+    pointerEvents: 'none'
+  },
+  cutBtn: {
+    background: 'linear-gradient(135deg, #D4AF37, #b8952e)',
     color: '#fff',
+    border: 'none',
+    padding: '1rem 3rem',
+    borderRadius: '50px',
+    fontSize: '1.2rem',
     fontWeight: 'bold',
-    textShadow: '0 2px 15px rgba(0,0,0,0.6)'
+    cursor: 'pointer',
+    boxShadow: '0 4px 15px rgba(212, 175, 55, 0.4)',
+    transition: 'transform 0.3s',
+    marginBottom: '1rem',
+    fontFamily: 'Arial, sans-serif'
   },
   modalOverlay: {
     position: 'fixed',
     top: 0, left: 0, right: 0, bottom: 0,
-    backgroundColor: 'rgba(0,0,0,0.85)',
+    backgroundColor: 'rgba(0,0,0,0.8)',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -988,7 +894,7 @@ const styles = {
     maxHeight: '90vh',
     overflowY: 'auto',
     position: 'relative',
-    boxShadow: '0 20px 60px rgba(0,0,0,0.6)'
+    boxShadow: '0 20px 60px rgba(0,0,0,0.5)'
   },
   closeBtn: {
     position: 'absolute',
@@ -1040,26 +946,15 @@ const styles = {
   }
 };
 
-// ==========================================
-// MOBILE RESPONSIVE OVERRIDES
-// ==========================================
-const mobileStyles = document.createElement('style');
-mobileStyles.innerHTML = `
-  @media (max-width: 600px) {
-    .floatingCard {
-      width: 80px !important;
-      height: 120px !important;
-    }
-    .revealCardWrapper {
-      width: 130px !important;
-      height: 190px !important;
-    }
-    .etherealGlow {
-      width: 300px !important;
-      height: 300px !important;
-    }
+// Inject CSS animation for the glow
+const styleTag = document.createElement('style');
+styleTag.innerHTML = `
+  @keyframes pulseGlow {
+    0% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.3; }
+    50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.7; }
+    100% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.3; }
   }
 `;
-document.head.appendChild(mobileStyles);
+document.head.appendChild(styleTag);
 
 export default Tarot;
