@@ -802,7 +802,7 @@ const styles = {
   questionMarkWrapper: {
     position: 'absolute',
     bottom: '50px',
-    left: '40%',  /* ✅ Shifted the fan slightly to the left */
+    left: '45%',  /* ✅ Shifted the fan slightly to the left */
     transform: 'translateX(-50%)',
     zIndex: 0
   },
