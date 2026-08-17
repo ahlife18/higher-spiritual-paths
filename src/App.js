@@ -41,7 +41,7 @@ function App() {
     <BrowserRouter>
       <Navbar cartCount={cart.length} />
       <Routes>
-        <Route path="/tarot" element={<Tarot />} />
+        <Route path="/tarot-cards" element={<TarotCards />} />
         <Route path="/guardian-angel" element={<GuardianAngel />} />
         <Route path="/angel-numbers" element={<AngelNumbers />} />
         <Route path="/blog/:id" element={<BlogPost />} />
